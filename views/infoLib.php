@@ -2,10 +2,11 @@
     require_once '../models/portadalib.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
+    $id_libro = $_GET['opc'];
     $msjModel = new MensajesModel();
-    $mensajes = $msjModel->getAllMensajes();
-    $mensajes2 = $msjModel->getAllAutor();
-    $mensajes3 = $msjModel->getAllinfo_Autor();
+    $mensajes = $msjModel->getAllMensajes($id_libro);
+    $mensajes2 = $msjModel->getAllAutor($id_libro);
+    $mensajes3 = $msjModel->getAllinfo_Autor($id_libro);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,9 +96,12 @@
             }
         ?>
         <div class="container">
-            <label for="cantidad">Cantidad</label>
-            <input type="number" id="cantidad" name="cantidad" />
-            <button><i class="fa fa-cart-plus" aria-hidden="true" action="../controller/carrito.php">Cantidad</i></button>
+            
+            <form action="../controller/carrito.php" method="post">
+              <label for="txtCantidad">Cantidad</label>
+              <input type="number" id="txtCantidad" name="txtCantidad" />
+              <button><i class="fa fa-cart-plus" aria-hidden="true">Cantidad</i></button>
+            </form>
         </div>
         
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
