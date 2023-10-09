@@ -52,7 +52,6 @@
             WHERE l.id_libro = $id_libro;
             ";
             $rs = $this->db->Execute($query);
-            // print_r($rs->getRows());
             return $rs;
         }  
         public function UpdateCarrito($id_usuario, $id_libro){
@@ -60,7 +59,6 @@
             $record = array();
             $record['cantidad'] = $_POST['txtCantidad'];
             $this->db->autoExecute($table,$record,'UPDATE', 'id_usuario = '.$id_usuario.' AND id_libro='.$id_libro);
-
         }
         public function DeleteCarrito($id_usuario, $id_libro){
             $table = 'carrito';
@@ -73,7 +71,7 @@
             $record = array();
             $record['id_usuario'] = $id_usuario;
             $record['id_libro'] = $id_libro;
-            $record['cantidad'] = $_POST['cantidad'];
+            $record['cantidad'] = $_POST['txtCantidad'];
             $this->db->autoExecute($table,$record,'INSERT');
         }
     }

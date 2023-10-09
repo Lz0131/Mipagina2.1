@@ -1,25 +1,23 @@
 <?php
-    require_once '../models/portadalib.php';
+    require_once '../models/favorito.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
-    $id_libro = $_GET['opc'];
     $msjModel = new MensajesModel();
-    $mensajes = $msjModel->getAllMensajes($id_libro);
-    $mensajes2 = $msjModel->getAllAutor($id_libro);
-    $mensajes3 = $msjModel->getAllinfo_Autor($id_libro);
+    $id_usuario = 1;
+    $mensajes = $msjModel->getAllFavoritos($id_usuario);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Favoritos</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
     <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
-    <link rel="stylesheet" href="../assets/css/infoLib.css"> <!--Direccion al css-->
+    <link rel="stylesheet" href="../assets/css/favorito.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     <script src="../assets/js/jquery-1.11.3.min.js"></script>
     <script src="../assets/js/corazon.js"></script>
@@ -84,84 +82,46 @@
             </div>
         </nav>
     </header> 
-    <!--Cuadro de informacion del libro-->
-    <div>
-        <h1 id="txtTitulo" name="txtTitulo"><?php echo $mensajes->fields[2]?></h1>
-        <?php
-            if (isset($mensajes->fields[9])) {
-                $url_imagen = htmlspecialchars($mensajes->fields[9], ENT_QUOTES, 'UTF-8');
-                echo '<div class="centrar-imagen">';
-                echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . '">';
-                echo '</div>';
-            } else {
-                echo 'La URL de la imagen no está disponible.';
-            }
-        ?>
-        <form action=<?php echo '../controller/favorito.php?id='.$id_libro.' ' ?> method="post">
-          <div class="feeds">
-            <div class="feed">
-              <div class="actions">
-                <button type="submit" class="btn">
-                  <i class="heart"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-        <div class="container-carrito">
-            <form action=<?php echo '../controller/carrito.php?id='.$id_libro.' ' ?> method="post">
-              <label for="txtCantidad">Cantidad</label>
-              <input type="number" id="txtCantidad" name="txtCantidad" />
-              <button  type="submit" class="btn"><i class="fa fa-cart-plus" aria-hidden="true">Carrito</i></button>
-            </form>
+    <!--Cuadro de favoritos-->
+    <main>
+        <div class="favoritos container">
+            <h1>Favoritos</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Portada</th>
+                        <th scope="col">Titulo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        while(!$mensajes->EOF){
+                    ?>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>
+                            <?php
+                                if (isset($mensajes->fields[0])) {
+                                    $url_imagen = htmlspecialchars($mensajes->fields[0], ENT_QUOTES, 'UTF-8');
+                                    echo '<div class="centrar-imagen">';
+                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . '">';
+                                    echo '</div>';
+                                } else {
+                                    echo 'La URL de la imagen no está disponible.';
+                                }
+                            ?>
+                        </td>
+                        <td><?php echo $mensajes->fields[1]?></td>
+                    </tr>
+                    <?php
+                        $mensajes->moveNext();
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-        
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <!-- panel 1 -->
-            <div class="panel panel-default">
-                <!--wrap panel heading in span to trigger image change as well as collapse -->
-                <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
-                    <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
-                        data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                        aria-controls="collapseOne">
-                        <h4 class="panel-title">Informacion General</h4>
-                    </div>
-                </span>
-
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                    aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <!-- Tab content goes here -->
-                        <br>
-                        Titulo<?php echo $mensajes->fields[2]?><br>
-                        Autor: <?php echo $mensajes2->fields[0]?> <?php echo $mensajes2->fields[1]?> <?php echo $mensajes2->fields[2]?><br>
-                        Informacion del autor: <?php echo $mensajes3->fields[0]?> <br>
-                        Idioma Original: Koreano <br>
-                        Estatus: Completada <br>
-                        Generos: Apocalipsis, Acción, Aventura, Drama
-                    </div>
-                </div>
-            </div>
-            <!-- panel 2 -->
-            <div class="panel panel-default">
-                <!--wrap panel heading in span to trigger image change as well as collapse -->
-                <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
-                    <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
-                        data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                        aria-controls="collapseOne">
-                        <h4 class="panel-title">Sinopsis</h4>
-                    </div>
-                </span>
-
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                    aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <?php echo $mensajes->fields[6]?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
     <!--Pie de Pagina Footer--> 
     <footer class="section footer-classic context-dark bg-image" style="background:black;">
         <div class="containe">
@@ -210,9 +170,5 @@
           <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
         </div>
       </footer>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>

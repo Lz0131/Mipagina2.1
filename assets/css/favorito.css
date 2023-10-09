@@ -139,9 +139,11 @@ label{
     font-weight: bold;
     text-align: center;
 }
-
+main{
+    flex: 1;
+}
 /* corazon */
-button .btn{
+button {
   background-color: transparent;
   border: transparent;
 }
