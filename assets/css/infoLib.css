@@ -141,62 +141,22 @@ label{
 }
 
 /* corazon */
+container-favorito{
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
 button .btn{
   background-color: transparent;
   border: transparent;
+  text-align: center;
+  margin-bottom: auto;
+  margin-left: auto;
 }
-.feed {
+.fa{
   background-color: transparent;
-  border-radius: 30px;
-  padding: 2rem 1rem;
-  width: 100%;
-  position: relative;
-}
-
-.feeds {
-  width: 40%;
-  margin: 0 auto;
-}
-
-.heart {
-  background-image: url(../img/web_heart_animation.png);
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: 3500px;
-  cursor: pointer;
-  display: inline-block;
-  height: 100px;
-  width: 100px;
-}
-
-.heart:hover {
-  background-position: right;
-}
-
-@-webkit-keyframes heartTransition {
-  0% {
-    background-position: left;
-  }
-  100% {
-    background-position: right;
-  }
-}
-
-@keyframes heartTransition {
-  0% {
-    background-position: left;
-  }
-  100% {
-    background-position: right;
-  }
-}
-
-.heart_animate {
-  animation-duration: 0.8s;
-  animation-iteration-count: 1;
-  animation-name: heartTransition;
-  animation-timing-function: steps(28);
-  background-position: right;
+  border: transparent;
+  text-align: center;
 }
 
 /*Footer*/

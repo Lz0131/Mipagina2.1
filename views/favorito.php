@@ -19,8 +19,7 @@
     <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
     <link rel="stylesheet" href="../assets/css/favorito.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <script src="../assets/js/jquery-1.11.3.min.js"></script>
-    <script src="../assets/js/corazon.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -92,6 +91,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Portada</th>
                         <th scope="col">Titulo</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,14 +106,16 @@
                                 if (isset($mensajes->fields[0])) {
                                     $url_imagen = htmlspecialchars($mensajes->fields[0], ENT_QUOTES, 'UTF-8');
                                     echo '<div class="centrar-imagen">';
-                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . '">';
+                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
                                     echo '</div>';
                                 } else {
                                     echo 'La URL de la imagen no está disponible.';
                                 }
                             ?>
                         </td>
-                        <td><?php echo $mensajes->fields[1]?></td>
+                        <td><h1><?php echo $mensajes->fields[1]?></h1></td>
+                        <td><button  type="submit" class="btn" style='font-size:24px'><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
+                        <td><button  type="submit" class="btn" style='font-size:24px'><i class="fa fa-book" aria-hidden="true"></i></button></td>
                     </tr>
                     <?php
                         $mensajes->moveNext();

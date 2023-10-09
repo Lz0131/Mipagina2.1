@@ -21,8 +21,7 @@
     <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
     <link rel="stylesheet" href="../assets/css/infoLib.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <script src="../assets/js/jquery-1.11.3.min.js"></script>
-    <script src="../assets/js/corazon.js"></script>
+    
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -91,23 +90,18 @@
             if (isset($mensajes->fields[9])) {
                 $url_imagen = htmlspecialchars($mensajes->fields[9], ENT_QUOTES, 'UTF-8');
                 echo '<div class="centrar-imagen">';
-                echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . '">';
+                echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
                 echo '</div>';
             } else {
                 echo 'La URL de la imagen no está disponible.';
             }
         ?>
-        <form action=<?php echo '../controller/favorito.php?id='.$id_libro.' ' ?> method="post">
-          <div class="feeds">
-            <div class="feed">
-              <div class="actions">
-                <button type="submit" class="btn">
-                  <i class="heart"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
+        <div class="container-favorito" style="text-align: center;">
+          <form action=<?php echo '../controller/favorito.php?id='.$id_libro.' ' ?> method="post">
+          <button  type="submit" class="btn"><i class="fa fa-heart" aria-hidden="true" style="color: black;">Favorito</i></button>
+          </form>
+        </div>
+       
         <div class="container-carrito">
             <form action=<?php echo '../controller/carrito.php?id='.$id_libro.' ' ?> method="post">
               <label for="txtCantidad">Cantidad</label>
