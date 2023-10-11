@@ -11,19 +11,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favoritos</title>
+    <title>Carrito</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
     <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
-    <link rel="stylesheet" href="../assets/css/favorito.css"> <!--Direccion al css-->
+    <link rel="stylesheet" href="../assets/css/infoLib.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
 
 </head>
 <!--Cuerpo-->
@@ -49,11 +49,11 @@
                           <i class="fa fa-book">
                             <span class="badge badge-danger">11</span>
                           </i>
-                          Siguiendo
+                          Historial
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="./favorito.php">
                           <i class="fa fa-heart">
                             <span class="badge badge-danger">11</span>
                           </i>
@@ -61,7 +61,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="./carrito.php">
+                      <a class="nav-link" href="#">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
                           <span class="badge badge-danger">11</span>
                         </i>
@@ -73,8 +73,8 @@
                           <i class="fa fa-user-circle" aria-hidden="true"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <a class="dropdown-item" href="./login.html">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
-                          <a class="dropdown-item" href="./signup.html">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
+                          <a class="dropdown-item" href="./login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
+                          <a class="dropdown-item" href="./signup.php">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item disabled" href="#">Salir</a> <!--esta debe de estar oculta asta que se inicie sesion-->
                       </div>

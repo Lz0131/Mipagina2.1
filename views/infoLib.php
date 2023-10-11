@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>InfoLib</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -62,13 +62,21 @@
                           Favoritos
                         </a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="./favorito.php">
+                        <i class="fa fa-shopping-cart" aria-hidden="true">
+                          <span class="badge badge-danger">11</span>
+                        </i>
+                        Carrito
+                      </a>
+                    </li>
                     <li class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-user-circle" aria-hidden="true"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <a class="dropdown-item" href="./login.html">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
-                          <a class="dropdown-item" href="./signup.html">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
+                          <a class="dropdown-item" href="./login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
+                          <a class="dropdown-item" href="./signup.php">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item disabled" href="#">Salir</a> <!--esta debe de estar oculta asta que se inicie sesion-->
                       </div>
@@ -97,7 +105,7 @@
             }
         ?>
         <div class="container-favorito" style="text-align: center;">
-          <form action=<?php echo '../controller/favorito.php?id='.$id_libro.' ' ?> method="post">
+          <form action=<?php echo '../controller/ctrfavorito.php?id='.$id_libro.' ' ?> method="post">
           <button  type="submit" class="btn"><i class="fa fa-heart" aria-hidden="true" style="color: black;">Favorito</i></button>
           </form>
         </div>
@@ -139,14 +147,13 @@
             <!-- panel 2 -->
             <div class="panel panel-default">
                 <!--wrap panel heading in span to trigger image change as well as collapse -->
-                <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
+                <span class="side-tab" data-target="#tab2" data-toggle="tab" role="tab" aria-expanded="false">
                     <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
                         data-parent="#accordion" href="#collapseOne" aria-expanded="true"
                         aria-controls="collapseOne">
                         <h4 class="panel-title">Sinopsis</h4>
                     </div>
                 </span>
-
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
                     aria-labelledby="headingOne">
                     <div class="panel-body">

@@ -44,12 +44,20 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./favoritos.php">
+                        <a class="nav-link" href="./favorito.php">
                           <i class="fa fa-heart">
-                            <span class="badge badge-danger">11</span>
+                            <span class="badge badge-danger"><?php echo '1'; ?></span>
                           </i>
                           Favoritos
                         </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="./views/favorito.php">
+                        <i class="fa fa-shopping-cart" aria-hidden="true">
+                          <span class="badge badge-danger">11</span>
+                        </i>
+                        Carrito
+                      </a>
                     </li>
                     <li class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

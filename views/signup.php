@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Carrito</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -51,6 +51,14 @@
                           Favoritos
                         </a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="./favorito.php">
+                        <i class="fa fa-shopping-cart" aria-hidden="true">
+                          <span class="badge badge-danger">11</span>
+                        </i>
+                        Carrito
+                      </a>
+                    </li>
                     <li class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -72,7 +80,7 @@
             </div>
         </nav>
     </header> 
-    <!--Cuadro de inicio de sesion-->
+    <!--Cuadro de Registro-->
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
@@ -90,8 +98,25 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="txtemail" name="txtemail" class="form-control" placeholder="correo">
-                            
+                            <input type="text" id="txtnombre" name="txtnombre" class="form-control" placeholder="Nombre">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="txtape_p" name="txtape_p" class="form-control" placeholder="Apellido paterno">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="txtape_m" name="txtape_m" class="form-control" placeholder="Apellido materno">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="txtcorreo" name="txtcorreo" class="form-control" placeholder="Correo">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
@@ -109,10 +134,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        No tienes cuenta?<a href="./signup.html">Registrarse</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="./recover_password.html">Olvidaste tu contraseña?</a>
+                        Tienes cuenta?<a href="./login.php">Inciar Sesión</a>
                     </div>
                 </div>
             </div>

@@ -25,6 +25,11 @@
             $rs = $this->db->Execute($query);
             return $rs;
         }
+        public function getAllTotalFavoritosnum($id_libro){
+            $query = "SELECT COUNT(*) FROM favorito WHERE AND id_usuario= $id_usuario";
+            $rs = $this->db->Execute($query);
+            return $rs;
+        }
         public function DeleteFavorito($id_usuario, $id_libro){
             $table = 'favorito';
             $query = 'DELETE FROM favorito WHERE id_usuario ='. $id_usuario.'  AND id_libro='.$id_libro;

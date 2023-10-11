@@ -139,61 +139,68 @@ label{
     font-weight: bold;
     text-align: center;
 }
-
+main{
+    flex: 1;
+}
 /* corazon */
-container-favorito{
-  color: black;
-  font-weight: bold;
-  text-align: center;
-}
-button .btn{
+button {
   background-color: transparent;
   border: transparent;
-  text-align: center;
-  margin-bottom: auto;
-  margin-left: auto;
 }
-.fa{
+.feed {
   background-color: transparent;
-  border: transparent;
-  text-align: center;
-}
-/*Panel*/
-.panel-heading:hover {
-  cursor:pointer;
-}
-.panel-heading {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;    
+  border-radius: 30px;
+  padding: 2rem 1rem;
+  width: 100%;
+  position: relative;
 }
 
-.side-tab:hover {
-      cursor: pointer;
+.feeds {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.heart {
+  background-image: url(../img/web_heart_animation.png);
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 3500px;
+  cursor: pointer;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+}
+
+.heart:hover {
+  background-position: right;
+}
+
+@-webkit-keyframes heartTransition {
+  0% {
+    background-position: left;
   }
-  .panel.panel-default {
-      border: none;
-      box-shadow: none !important;
-      border-bottom-right-radius: 0px;
-      border-bottom-left-radius: 0px;
-      padding-left: 30px;
-      padding-right: 30px;
+  100% {
+    background-position: right;
   }
-  .panel-heading {
-      border: none;
-      background-color: #eee;
-  
+}
+
+@keyframes heartTransition {
+  0% {
+    background-position: left;
   }
-  .panel-body {
-      background-color: #f5f5f5;
+  100% {
+    background-position: right;
   }
-  .panel-title {
-      font-weight: 400;
-      color: white;
-  }
+}
+
+.heart_animate {
+  animation-duration: 0.8s;
+  animation-iteration-count: 1;
+  animation-name: heartTransition;
+  animation-timing-function: steps(28);
+  background-position: right;
+}
+
 /*Footer*/
 .context-dark, .bg-gray-dark, .bg-primary {
   color: rgba(255, 255, 255, 0.8);
