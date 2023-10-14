@@ -1,6 +1,13 @@
+<?php
+    require_once './models/carrito.php';
+    require_once './models/conexion.php';
+    include_once './assets/adodb5/adodb.inc.php';
+    $numModel = new MensajesModelCarrito();
+    $id_usuario = 1;
+    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +62,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="./views/carrito.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                          <span class="badge badge-danger">11</span>
+                          <span class="badge badge-danger"><?php echo $mensajes2->fields[0] ?></span>
                         </i>
                         Carrito
                       </a>

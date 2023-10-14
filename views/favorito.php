@@ -1,10 +1,13 @@
 <?php
     require_once '../models/favorito.php';
+    require_once '../models/carrito.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
     $msjModel = new MensajesModel();
     $id_usuario = 1;
     $mensajes = $msjModel->getAllFavoritos($id_usuario);
+    $numModel = new MensajesModelCarrito();
+    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,14 +33,14 @@
     <!--Barra de Navegacion Header-->
     <header>
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="../index.html"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
+            <a class="navbar-brand" href="../index.php"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../index.html">
+                        <a class="nav-link" href="../index.php">
                             <i class="fa fa-home"></i>
                             Inicio
                             <span class="sr-only">(current)</span>
@@ -62,7 +65,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="./carrito.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                          <span class="badge badge-danger">11</span>
+                          <span class="badge badge-danger"><?php echo $mensajes2->fields[0] ?></span>
                         </i>
                         Carrito
                       </a>

@@ -31,18 +31,13 @@
             return $rs;
         }
 
-        public function getAllMensajes($id_libro){
-            $query = "SELECT * FROM libro where id_libro = $id_libro";
+        public function getAllLibro(){
+            $query = "SELECT * FROM libro";
             $rs = $this->db->Execute($query);
             // print_r($rs->getRows());
             return $rs;
         }  
-        public function getAllCarritonum($id_usuario, $id_libro){
-            $query = "SELECT COUNT(*) FROM carrito WHERE id_usuario = $id_usuario AND id_libro = $id_libro";
-            $rs = $this->db->Execute($query);
-            // print_r($rs->getRows());
-            return $rs;
-        }  
+         
         public function getAllAutor($id_libro){
             $query = "SELECT u.nombre, u.apellido_p, u.apellido_m, u.email
             FROM libro l

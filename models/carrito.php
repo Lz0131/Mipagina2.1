@@ -13,10 +13,27 @@
     
 
         public function getAllCarrito($id_usuario){
-            $query = "SELECT libro.portada, libro.nombre, carrito.cantidad, libro.id_libro, carrito.cantidad * libro
+            $query = "SELECT 
+            libro.portada, 
+            libro.nombre, 
+            carrito.cantidad, 
+            libro.id_libro, 
+            (carrito.cantidad * (SELECT tipo_libro.precio FROM tipo_libro WHERE tipo_libro.id_libro = libro.id_libro AND tipo_libro.id_tipo = 1)) AS subtotal
             FROM carrito
-            INNER JOIN libro ON carrito.id_libro = libro.id_libro
-            WHERE carrito.id_usuario = $id_usuario;";
+            INNER JOIN libro ON libro.id_libro = carrito.id_libro
+            WHERE carrito.id_usuario = $id_usuario";
+            $rs = $this->db->Execute($query);
+            return $rs;
+        }
+        public function getSubTotal($id_usuario){
+            $query = "SELECT SUM(subtotal) AS total_carrito
+            FROM (
+                SELECT 
+                    (carrito.cantidad * (SELECT tipo_libro.precio FROM tipo_libro WHERE tipo_libro.id_libro = libro.id_libro AND tipo_libro.id_tipo = 1)) AS subtotal
+                FROM carrito
+                INNER JOIN libro ON libro.id_libro = carrito.id_libro
+                WHERE carrito.id_usuario = $id_usuario
+            ) AS subtotales;";
             $rs = $this->db->Execute($query);
             return $rs;
         }

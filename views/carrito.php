@@ -5,8 +5,9 @@
     $msjModel = new MensajesModelCarrito();
     $numModel = new MensajesModelCarrito();
     $id_usuario = 1;
-    $mensaje = $msjModel->getAllCarrito($id_usuario);
+    $mensajes = $msjModel->getAllCarrito($id_usuario);
     $mensajes2 = $numModel->getAllCarritonum($id_usuario);
+    $mensajes3 = $msjModel->getSubTotal($id_usuario);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,14 +32,14 @@
     <!--Barra de Navegacion Header-->
     <header>
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="../index.html"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
+            <a class="navbar-brand" href="../index.php"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../index.html">
+                        <a class="nav-link" href="../index.php">
                             <i class="fa fa-home"></i>
                             Inicio
                             <span class="sr-only">(current)</span>
@@ -114,7 +115,6 @@
                 </thead>
                 <tbody>
                     <?php
-                      var_dump($mensajes);
                       while(!$mensajes->EOF){
                     ?>
                     <tr>
@@ -139,7 +139,7 @@
                           <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
                         </form>
                         </td>
-                        <td><h1><?php echo $mensajes->fields[3]?></h1></td>
+                        <td><h1><?php echo $mensajes->fields[4]?></h1></td>
                         <td><h1></h1></td>
                     </tr>
                     <?php
@@ -148,7 +148,7 @@
                     ?>
                 </tbody>
             </table>
-            <h1>Subtotal : <?php ?></h1>
+            <h1>Subtotal : <?php echo $mensajes3 ->fields[0] ?></h1>
         </div>
     </main>
     <!--Pie de Pagina Footer--> 

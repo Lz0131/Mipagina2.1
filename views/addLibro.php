@@ -1,9 +1,18 @@
 <?php
     require_once '../models/libros.php';
+    require_once '../models/carrito.php';
+    require_once '../models/editorial.php';
+    require_once '../models/categoria.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
-    $id_libro = $_GET['opc'];
+    $id_usuario = 1;
     $msjModel = new MensajesLibro();
+    $numModel = new MensajesModelCarrito();
+    $nomEditorial = new MensajesEditorial();
+    $nomCategoria = new MensajesCategoria();
+    $mensajes4 = $nomCategoria->getNomCategoria();
+    $mensajes3 = $nomEditorial->getNomEditorial();
+    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
     $mensajes = $msjModel-> getNomInfo_Autor();
 ?>
 <!DOCTYPE html>
@@ -31,14 +40,14 @@
     <!--Barra de Navegacion Header-->
     <header>
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="../index.html"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
+            <a class="navbar-brand" href="../index.php"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../index.html">
+                        <a class="nav-link" href="../index.php">
                             <i class="fa fa-home"></i>
                             Inicio
                             <span class="sr-only">(current)</span>
@@ -63,7 +72,7 @@
                     <li class="nav-item">
                       <a class="nav-link" href="./favorito.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                          <span class="badge badge-danger">11</span>
+                          <span class="badge badge-danger"><?php echo $mensajes2->fields[0] ?></span>
                         </i>
                         Carrito
                       </a>
@@ -100,7 +109,7 @@
                     <?php
                         while(!$mensajes->EOF){
                     ?>
-                    <option value="<?php echo $mensajes->fields[0] ?>"><?php echo $mensajes->fields[0] ?></option>
+                    <option value="<?php echo $mensajes->fields[1] ?>"><?php echo $mensajes->fields[0] ?></option>
                     <?php 
                             $mensajes->moveNext();
                         }
@@ -135,23 +144,23 @@
                     <label for="Selecteditorial">Editorial</label>
                     <select name="selectEditorial" id="selectEditorial" class="form-control">
                     <?php
-                        while(!$mensajes->EOF){
+                        while(!$mensajes3->EOF){
                     ?>
-                    <option value="<?php echo $mensajes->fields[0] ?>"><?php echo $mensajes->fields[0] ?></option>
+                    <option value="<?php echo $mensajes3->fields[1] ?>"><?php echo $mensajes3->fields[0] ?></option>
                     <?php 
-                            $mensajes->moveNext();
+                            $mensajes3->moveNext();
                         }
                     ?>
                     </select>
                 <div class="form-group">
-                    <label for="SelectEstatus">Autor</label>
+                    <label for="SelectEstatus">Categoria</label>
                     <select name="selectEstatus" id="selectEstatus" class="form-control">
                     <?php
-                        while(!$mensajes->EOF){
+                        while(!$mensajes4->EOF){
                     ?>
-                    <option value="<?php echo $mensajes->fields[0] ?>"><?php echo $mensajes->fields[0] ?></option>
+                    <option value="<?php echo $mensajes4->fields[1] ?>"><?php echo $mensajes4->fields[0] ?></option>
                     <?php 
-                            $mensajes->moveNext();
+                            $mensajes4->moveNext();
                         }
                     ?>
                     </select>
