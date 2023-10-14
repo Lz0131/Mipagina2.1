@@ -19,4 +19,23 @@ $r= $result->fields[0];
         header("Location: " . $_SERVER["HTTP_REFERER"]);
         exit; 
     }
+    if( isset($_GET['opc']) ){
+        $msjModel = new MensajesModel();
+        switch($_GET['opc']){
+            case 1: // INSERT TO DB
+                
+                break;
+            case 2: // UPDATE TO BD
+                //$msjModel->updateMensaje();
+                break;
+            case 3: // DELETE TO DB
+                $idMsj = $_POST['idMsj'];
+                $msjModel->DeleteFavorito($idMsj);
+                //echo 'Mensaje AJAX';
+                break;
+            case 4: // SELECT TO DB
+                echo getMensajes ($msjModel);
+                break;
+        }
+    }
 ?>

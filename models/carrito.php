@@ -1,5 +1,5 @@
 <?php
-    class MensajesModel{
+    class MensajesModelCarrito{
         private $id_libro;
         private $id_usuario;
 
@@ -12,16 +12,17 @@
         }
     
 
-        public function getAllFavoritos($id_usuario){
-            $query = "SELECT libro.portada, libro.nombre, libro.id_libro, favorito.id_usuario
-            FROM favorito
-            INNER JOIN libro ON favorito.id_libro = libro.id_libro
-            WHERE favorito.id_usuario = $id_usuario";
+        public function getAllCarrito($id_usuario){
+            $query = "SELECT libro.portada, libro.nombre, carrito.cantidad, libro.id_libro, carrito.cantidad * libro
+            FROM carrito
+            INNER JOIN libro ON carrito.id_libro = libro.id_libro
+            WHERE carrito.id_usuario = $id_usuario;";
             $rs = $this->db->Execute($query);
             return $rs;
         }
-        public function getAllFavoritosnum($id_usuario, $id_libro){
-            $query = "SELECT COUNT(*) FROM favorito WHERE id_libro = $id_libro AND id_usuario= $id_usuario";
+
+        public function getAllCarritonum($id_usuario){
+            $query = "SELECT COUNT(*) FROM carrito WHERE id_usuario= $id_usuario";
             $rs = $this->db->Execute($query);
             return $rs;
         }

@@ -1,10 +1,12 @@
 <?php
-    require_once '../models/favorito.php';
+    require_once '../models/carrito.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
-    $msjModel = new MensajesModel();
+    $msjModel = new MensajesModelCarrito();
+    $numModel = new MensajesModelCarrito();
     $id_usuario = 1;
-    $mensajes = $msjModel->getAllFavoritos($id_usuario);
+    $mensaje = $msjModel->getAllCarrito($id_usuario);
+    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,9 +63,16 @@
                     <li class="nav-item">
                       <a class="nav-link" href="#">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                          <span class="badge badge-danger">11</span>
+                          <span class="badge badge-danger"><?php echo $mensajes2->fields[0] ?></span>
                         </i>
                         Carrito
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="./addLibro.php">
+                        <i class="fa fa-shopping-cart" aria-hidden="true">
+                        </i>
+                        Add Libros
                       </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -90,20 +99,23 @@
     <!--Cuadro de favoritos-->
     <main>
         <div class="favoritos container">
-            <h1>Favoritos</h1>
+            <h1>Carrito</h1>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Portada</th>
                         <th scope="col">Titulo</th>
+                        <th scope="col">Cantidad</th>
                         <th scope="col"></th>
+                        <th scope="col">Subtotal</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                        while(!$mensajes->EOF){
+                      var_dump($mensajes);
+                      while(!$mensajes->EOF){
                     ?>
                     <tr>
                         <th scope="row">1</th>
@@ -120,15 +132,23 @@
                             ?>
                         </td>
                         <td><h1><?php echo $mensajes->fields[1]?></h1></td>
-                        <td><button  type="submit" class="btn" style='font-size:24px'><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
-                        <td><button  type="submit" class="btn" style='font-size:24px'><i class="fa fa-book" aria-hidden="true"></i></button></td>
+                        <td><h1><?php echo $mensajes->fields[2]?></h1></td>
+                        <td>
+                        <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
+                          <input type="hidden" id="txtCantidad" name="txtCantidad" value = "0">
+                          <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
+                        </form>
+                        </td>
+                        <td><h1><?php echo $mensajes->fields[3]?></h1></td>
+                        <td><h1></h1></td>
                     </tr>
                     <?php
-                        $mensajes->moveNext();
+                    $mensajes->moveNext();
                     }
                     ?>
                 </tbody>
             </table>
+            <h1>Subtotal : <?php ?></h1>
         </div>
     </main>
     <!--Pie de Pagina Footer--> 

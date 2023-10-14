@@ -1,10 +1,10 @@
 <?php
-    require_once '../models/favorito.php';
+    require_once '../models/libros.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
-    $msjModel = new MensajesModel();
-    $id_usuario = 1;
-    $mensajes = $msjModel->getAllFavoritos($id_usuario);
+    $id_libro = $_GET['opc'];
+    $msjModel = new MensajesLibro();
+    $mensajes = $msjModel-> getNomInfo_Autor();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +23,7 @@
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 
 </head>
 <!--Cuerpo-->
@@ -52,7 +53,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="./favorito.php">
                           <i class="fa fa-heart">
                             <span class="badge badge-danger">11</span>
                           </i>
@@ -60,24 +61,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="./carrito.php">
+                      <a class="nav-link" href="./favorito.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
                           <span class="badge badge-danger">11</span>
                         </i>
                         Carrito
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="./addLibro.php">
-                        <i class="fa fa-shopping-cart" aria-hidden="true">
-                        </i>
-                        Add Libros
-                      </a>
-                    </li>
                     <li class="nav-item dropdown">
                       <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fa fa-user-circle" aria-hidden="true"></i>
-                          usuario
                       </a>
                       <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                           <a class="dropdown-item" href="./login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
@@ -95,51 +88,75 @@
                 </form>
             </div>
         </nav>
-    </header>
-    <!--Cuadro de favoritos-->
+    </header> 
+    <!--Cuadro de informacion del libro-->
     <main>
-        <div class="favoritos container">
-            <h1>Favoritos</h1>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Portada</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <form id="frmFavorito" method="post">
-                <tbody>
+        <div class="addlibro container">
+            <form id="frmaddlibro" method = "post">
+                <input type="hidden" id="hddId" name="hddId">
+                <div class="form-group">
+                    <label for="SelectAutor">Autor</label>
+                    <select name="selectAutor" id="selectAutor" class="form-control">
                     <?php
                         while(!$mensajes->EOF){
                     ?>
-                    <tr>
-                        <th id="txtidf" name="txtidf" scope="row"><?php $mensajes->fields[2] ?></th>
-                        <td>
-                            <?php
-                                if (isset($mensajes->fields[0])) {
-                                    $url_imagen = htmlspecialchars($mensajes->fields[0], ENT_QUOTES, 'UTF-8');
-                                    echo '<div class="centrar-imagen">';
-                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
-                                    echo '</div>';
-                                } else {
-                                    echo 'La URL de la imagen no está disponible.';
-                                }
-                            ?>
-                        </td>
-                        <td><h1><?php echo $mensajes->fields[1]?></h1></td>
-                        <td><button  type="submit" action=<?php echo '../controller/ctrfavorito.php?id='.$mensajes->fields[3].' ' ?> class="btn" style='font-size:24px'><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
-                        <td><button  type="submit" onclick= "" class="btn" style='font-size:24px'><i class="fa fa-book" aria-hidden="true"></i></button></td>
-                    </tr>
-                    <?php
-                        $mensajes->moveNext();
-                    }
+                    <option value="<?php echo $mensajes->fields[0] ?>"><?php echo $mensajes->fields[0] ?></option>
+                    <?php 
+                            $mensajes->moveNext();
+                        }
                     ?>
-                </tbody>
-              </form>
-            </table>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="txtNombre">Nombre</label>
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="datefecha">fecha</label>
+                    <input type="date" id="dateFecha" name="dateFecha" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="numCapitulos">Numero de capitulos</label>
+                    <input type="number" id="numCapitulos" name="numCapitulos" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="numPaginas">Numero de paginas</label>
+                    <input type="number" id="numPaginas" name="numPaginas" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="txtResena">Reseña</label>
+                    <textarea name="txtRerena" id="txtResena" cols="30" rows="10" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imgPortada"></label>
+                    <input type="file" id="imgPortada" name="imgPortada" accept="image/*" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="Selecteditorial">Editorial</label>
+                    <select name="selectEditorial" id="selectEditorial" class="form-control">
+                    <?php
+                        while(!$mensajes->EOF){
+                    ?>
+                    <option value="<?php echo $mensajes->fields[0] ?>"><?php echo $mensajes->fields[0] ?></option>
+                    <?php 
+                            $mensajes->moveNext();
+                        }
+                    ?>
+                    </select>
+                <div class="form-group">
+                    <label for="SelectEstatus">Autor</label>
+                    <select name="selectEstatus" id="selectEstatus" class="form-control">
+                    <?php
+                        while(!$mensajes->EOF){
+                    ?>
+                    <option value="<?php echo $mensajes->fields[0] ?>"><?php echo $mensajes->fields[0] ?></option>
+                    <?php 
+                            $mensajes->moveNext();
+                        }
+                    ?>
+                    </select>
+                </div>
+            </form>
         </div>
     </main>
     <!--Pie de Pagina Footer--> 
@@ -190,5 +207,9 @@
           <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
         </div>
       </footer>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>

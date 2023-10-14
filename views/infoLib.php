@@ -63,11 +63,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="./favorito.php">
+                      <a class="nav-link" href="./carrito.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
                           <span class="badge badge-danger">11</span>
                         </i>
                         Carrito
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="./addLibro.php">
+                        <i class="fa fa-shopping-cart" aria-hidden="true">
+                        </i>
+                        Add Libros
                       </a>
                     </li>
                     <li class="nav-item dropdown">
