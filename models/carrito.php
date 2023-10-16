@@ -48,9 +48,9 @@
             $rs = $this->db->Execute($query);
             return $rs;
         }
-        public function DeleteFavorito($id_usuario, $id_libro){
-            $table = 'favorito';
-            $query = 'DELETE FROM favorito WHERE id_usuario ='. $id_usuario.'  AND id_libro='.$id_libro;
+        public function DeleteCarrito($id_usuario){
+            $table = 'carrito';
+            $query = 'DELETE FROM carrito WHERE id_usuario ='. $id_usuario;
             $this->db->Execute($query);
             
         }
@@ -60,6 +60,20 @@
             $record['id_usuario'] = $id_usuario;
             $record['id_libro'] = $id_libro;
             $this->db->autoExecute($table,$record,'INSERT');
+        }
+
+        public function Updateplus($id_libro){
+            $query = 'UPDATE carrito
+            SET cantidad = cantidad + 1
+            WHERE id_usuario = 1 AND id_libro ='. $id_libro;
+            $this->db->Execute($query);
+        }
+
+        public function Updateminus($id_libro){
+            $query = 'UPDATE carrito
+            SET cantidad = cantidad - 1
+            WHERE id_usuario = 1 AND id_libro ='. $id_libro;
+            $this->db->Execute($query);
         }
     }
 ?>

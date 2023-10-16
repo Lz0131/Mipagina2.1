@@ -68,7 +68,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="./addLibro.php">
+                      <a class="nav-link" href="./views/addLibro.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
                         </i>
                         Add Libros

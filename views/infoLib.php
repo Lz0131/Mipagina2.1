@@ -4,11 +4,12 @@
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
     $id_libro = $_GET['opc'];
+    $id_usuario = 1;
+    $numModel = new MensajesModelCarrito();
     $msjModel = new MensajesModel();
     $mensajes = $msjModel->getAllMensajes($id_libro);
     $mensajes2 = $msjModel->getAllAutor($id_libro);
     $mensajes3 = $msjModel->getAllinfo_Autor($id_libro);
-    $numModel = new MensajesModelCarrito();
     $mensajes4 = $numModel->getAllCarritonum($id_usuario);
 ?>
 <!DOCTYPE html>

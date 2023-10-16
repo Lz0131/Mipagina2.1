@@ -19,13 +19,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
-    <link rel="stylesheet" href="../assets/css/infoLib.css"> <!--Direccion al css-->
+    <link rel="stylesheet" href="../assets/css/carrito.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
     
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+    <script>
+        function mostrarAlerta() {
+            alert("Compra exitosa");
+        }
+    </script>
 </head>
 <!--Cuerpo-->
 <body>
@@ -107,10 +111,11 @@
                         <th scope="col">#</th>
                         <th scope="col">Portada</th>
                         <th scope="col">Titulo</th>
+                        <th scope="col"></th>
                         <th scope="col">Cantidad</th>
                         <th scope="col"></th>
-                        <th scope="col">Subtotal</th>
                         <th scope="col"></th>
+                        <th scope="col">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,15 +137,27 @@
                             ?>
                         </td>
                         <td><h1><?php echo $mensajes->fields[1]?></h1></td>
+                        <td>
+                          <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
+                            <input type="hidden" id="Minus" name="Minus" value = "1">
+                            <button  type="submit" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                          </form>
+                        </td>
                         <td><h1><?php echo $mensajes->fields[2]?></h1></td>
                         <td>
-                        <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
-                          <input type="hidden" id="txtCantidad" name="txtCantidad" value = "0">
-                          <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
-                        </form>
+                          <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
+                            <input type="hidden" id="Plus" name="Plus" value = "2">
+                            <button  type="submit" class="btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                          </form>
+                        </td>
+                        <td>
+                          <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
+                            <input type="hidden" id="txtCantidad" name="txtCantidad" value = "0">
+                            <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
+                          </form>
                         </td>
                         <td><h1><?php echo $mensajes->fields[4]?></h1></td>
-                        <td><h1></h1></td>
+                        
                     </tr>
                     <?php
                     $mensajes->moveNext();
@@ -149,6 +166,12 @@
                 </tbody>
             </table>
             <h1>Subtotal : <?php echo $mensajes3 ->fields[0] ?></h1>
+            <div class="container-carrito">
+              <form action=<?php echo '../controller/carrito.php' ?> method="post">
+                <input type="hidden" id="Compra" name="Compra" value = "0">
+                <button  type="submit" class="btn " onclick="mostrarAlerta()"><i class="fa fa-shopping-basket" aria-hidden="true">Comprar</i></button>
+              </form>
+            </div>
         </div>
     </main>
     <!--Pie de Pagina Footer--> 

@@ -133,6 +133,7 @@ img{
   color: black;
   font-weight: bold;
   text-align: center;
+  font-size: 50px;
 }
 label{
   color: black;
@@ -146,6 +147,7 @@ main{
 button {
   background-color: transparent;
   border: transparent;
+  text-align: center;
 }
 .feed {
   background-color: transparent;

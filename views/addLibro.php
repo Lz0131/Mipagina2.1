@@ -10,6 +10,7 @@
     $numModel = new MensajesModelCarrito();
     $nomEditorial = new MensajesEditorial();
     $nomCategoria = new MensajesCategoria();
+    $mensajes5 = $msjModel->getAllLibro();
     $mensajes4 = $nomCategoria->getNomCategoria();
     $mensajes3 = $nomEditorial->getNomEditorial();
     $mensajes2 = $numModel->getAllCarritonum($id_usuario);
@@ -32,7 +33,27 @@
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+<script>
+    function editar(idMjs, nombre,  fecha, num_capitulos, num_paginas, resena){
+        document.getElementById('hddId').value = idMjs;
+        document.getElementById('txtNombre').value = nombre;
+        document.getElementById('dateFecha').value = fecha;
+        document.getElementById('numCapitulos').value = num_capitulos;
+        document.getElementById('numPaginas').value = num_paginas;
+        document.getElementById('txtResena').value = resena;
+    }
+    function insertar(){
+        var formData = $('#frmaddlibro').serialize();
+        $.ajax({
+            type: "POST",
+            url: "../controller/ctrLibro.php?opc=1",
+            data: formData,
+            success: function(data){
+                $('#tbLibros').html(data);
+            }
+        })
+    }
+</script>
 
 </head>
 <!--Cuerpo-->
@@ -70,11 +91,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="./favorito.php">
+                      <a class="nav-link" href="./carrito.php">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
                           <span class="badge badge-danger"><?php echo $mensajes2->fields[0] ?></span>
                         </i>
                         Carrito
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fa fa-shopping-cart" aria-hidden="true">
+                        </i>
+                        Add Libros
                       </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -101,10 +129,11 @@
     <!--Cuadro de informacion del libro-->
     <main>
         <div class="addlibro container">
+        <h3>Libros</h3><div id="resAJAX"></div>
             <form id="frmaddlibro" method = "post">
                 <input type="hidden" id="hddId" name="hddId">
                 <div class="form-group">
-                    <label for="SelectAutor">Autor</label>
+                    <label for="selectAutor">Autor</label>
                     <select name="selectAutor" id="selectAutor" class="form-control">
                     <?php
                         while(!$mensajes->EOF){
@@ -134,14 +163,14 @@
                 </div>
                 <div class="form-group">
                     <label for="txtResena">Reseña</label>
-                    <textarea name="txtRerena" id="txtResena" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="txtResena" id="txtResena" cols="30" rows="10" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="imgPortada"></label>
-                    <input type="file" id="imgPortada" name="imgPortada" accept="image/*" class="form-control">
+                    <label for="imgPortada">Portada</label>
+                    <input type="url" id="imgPortada" name="imgPortada" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="Selecteditorial">Editorial</label>
+                    <label for="selectEditorial">Editorial</label>
                     <select name="selectEditorial" id="selectEditorial" class="form-control">
                     <?php
                         while(!$mensajes3->EOF){
@@ -153,7 +182,7 @@
                     ?>
                     </select>
                 <div class="form-group">
-                    <label for="SelectEstatus">Categoria</label>
+                    <label for="selectEstatus">Categoria</label>
                     <select name="selectEstatus" id="selectEstatus" class="form-control">
                     <?php
                         while(!$mensajes4->EOF){
@@ -165,7 +194,60 @@
                     ?>
                     </select>
                 </div>
+                <button type="button" onclick="insertar()" class="btn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
             </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Portada</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Fecha de publicacion</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                      while(!$mensajes5->EOF){
+                    ?>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>
+                            <?php
+                                if (isset($mensajes5->fields[0])) {
+                                    $url_imagen = htmlspecialchars($mensajes5->fields[1], ENT_QUOTES, 'UTF-8');
+                                    echo '<div class="centrar-imagen">';
+                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
+                                    echo '</div>';
+                                } else {
+                                    echo 'La URL de la imagen no está disponible.';
+                                }
+                            ?>
+                        </td>
+                        <td><h1><?php echo $mensajes5->fields[2]?></h1></td>
+                        <td><h1><?php echo $mensajes5->fields[3]?></h1></td>
+                        <td><h1><?php echo $mensajes5->fields[4]?></h1></td>
+                        <td>
+                            <form   method="post">
+                                <input type="hidden" id="actualizar" name="actualizar" value = "2">
+                                <button  type="submit" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                          <form action=<?php echo '../controller/ctrLibro.php?id='.$mensajes5->fields[0].' ' ?> method="post">
+                            <input type="hidden" id="eliminar" name="eliminar" value = "3">
+                            <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
+                          </form>
+                        </td>
+                    </tr>
+                    <?php
+                    $mensajes5->moveNext();
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </main>
     <!--Pie de Pagina Footer--> 
