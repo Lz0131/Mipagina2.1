@@ -23,7 +23,7 @@
     
 
         public function getNomInfo_Autor(){
-            $query = "SELECT usuario.nombre, info_autor.id_usuario 
+            $query = "SELECT usuario.nombre, info_autor.id_info_autor 
             FROM info_autor
             JOIN usuario on usuario.id_usuario = info_autor.id_usuario;
             ";
@@ -97,20 +97,20 @@
             $portada = $_POST['imgPortada'];
             $id_editorial = $_POST['selectEditorial'];
             $id_estatus = $_POST['selectEstatus'];
-            /*$query = 'UPDATE libro 
-            SET id_info_autor='.$id_info_autor.',
-            nombre=\''.$nombre.'\',
-            fecha_publicacion=\''.$fecha_publicacion.'\',
-            num_capitulos='.$num_capitulos.',
-            num_paginas='.$num_paginas.',
-            resena=\''.$resena.'\',
-            portada=\''.$portada.'\',
-            id_editorial='.$id_editorial.',
-            id_estatus='.$id_estatus.'
-            WHERE id_libro='.$id_libro;
-            echo $query;
-            $this->db->Execute($query);*/
-            $record = array ();
+            $query = 'UPDATE libro 
+            SET id_info_autor ='.$id_info_autor.',
+            nombre = \''.$nombre.'\',
+            fecha_publicacion = \''.$fecha_publicacion.'\',
+            num_capitulos = '.$num_capitulos.',
+            num_paginas = '.$num_paginas.',
+            resena = \''.$resena.'\',
+            portada = \''.$portada.'\',
+            id_editorial ='.$id_editorial.',
+            id_estatus ='.$id_estatus.' 
+             WHERE id_libro = '.$id_libro;
+            //echo $query;
+            $this->db->Execute($query);
+           /* $record = array ();
             $record ['id_info_autor'] = $id_info_autor;
             $record ['nombre'] = $nombre;
             $record ['fecha_publicacion'] = $fecha_publicacion;
@@ -120,7 +120,7 @@
             $record ['portada'] = $portada;
             $record ['id_editorial'] = $id_editorial;
             $record ['id_estatus'] = $id_estatus;
-            ECHO $this->db->autoExecute($table,$record,'UPDATE' , 'id_libro='.$id_libro.' ');
+            ECHO $this->db->autoExecute($table,$record,'UPDATE' , 'id_libro='.$id_libro.' '); */
 
             
         }
