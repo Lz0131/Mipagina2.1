@@ -5,13 +5,13 @@ include_once '../assets/adodb5/adodb.inc.php';
 
  // Supongamos que el ID del usuario es 1
 
- $msjModel = new MensajesLibro();
+ 
 if( isset($_GET['opc']) ){
-   
+   $msjModel = new MensajesLibro();
     switch($_GET['opc']){
         case 1: // INSERT TO DB
             if(!empty($_POST['hddId']) )
-                $msjModel->updateLibro();    
+                $msjModel->updateLibro();
             else
                 $msjModel->InsertLibro();
             break;
@@ -19,19 +19,43 @@ if( isset($_GET['opc']) ){
             $msjModel->updateLibro();
             break;
         case 3: // DELETE TO DB
+            $id_libro = $_POST['idMsj'];
             $msjModel->DeleteLibro($id_libro);
             //echo 'Mensaje AJAX';
             break;
         case 4: // SELECT TO DB
             echo getLibro($msjModel);
-            
     }
-}else if(isset($_POST['eliminar'])){ 
-    $id_libro = $_GET['id']; 
-    $msjModel->DeleteLibro($id_libro);
-    header("Location: " . $_SERVER["HTTP_REFERER"]);
-}else{
-    header('Location: ../index.php');
 }
-
+    function getLibro($msjModel){
+        $response = '';
+        $mensajes5 = $msjModel->getAllLibro();
+        while(!$mensajes5->EOF){
+            if (isset($mensajes5->fields[0])) {
+                $img = '';
+                $url_imagen = htmlspecialchars($mensajes5->fields[1], ENT_QUOTES, 'UTF-8');
+                $img .= '<div class="centrar-imagen">';
+                $img .= '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
+                $img .= '</div>';
+            } else {
+                $img .= 'La URL de la imagen no está disponible.';
+            }
+            $response .= '
+            <tr>
+                <th scope="row">1</th>
+                <td>'.$img.'</td>
+                <td><h1>'.$mensajes5->fields[2].'</h1></td>
+                <td><h1>'.$mensajes5->fields[3].'</h1></td>
+                <td><h1>'.$mensajes5->fields[4].'</h1></td>
+                <td>
+                    <input type="button" value="Editar" onclick= "editar('.$mensajes5->fields[0].',\''.$mensajes5->fields[2].'\','.$mensajes5->fields[4].','.$mensajes5->fields[5].','.$mensajes5->fields[6].',\''.$mensajes5->fields[7].'\')" href="#" class="btn btn-success">
+                </td>
+                <td>
+                    <input type="button" class="btn btn-danger" value="Eliminar" onclick="eliminar('.$mensajes5->fields[0].')">
+                </td>
+            </tr>';
+            $mensajes5->moveNext();
+        }
+        return $response;
+    }
 ?>

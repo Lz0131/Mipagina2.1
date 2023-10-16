@@ -23,9 +23,9 @@
     
 
         public function getNomInfo_Autor(){
-            $query = "SELECT usuario.nombre, usuario.id_usuario 
+            $query = "SELECT usuario.nombre, info_autor.id_usuario 
             FROM info_autor
-            JOIN usuario on info_autor.id_usuario = usuario.id_usuario;
+            JOIN usuario on usuario.id_usuario = info_autor.id_usuario;
             ";
             $rs = $this->db->Execute($query);
             return $rs;
@@ -71,29 +71,58 @@
         }
         public function InsertLibro(){
             $table = 'libro';
-            $record = array ();
-            $record ['id_info_autor'] = $_POST['selectAutor'];
-            $record ['nombre'] = $_POST['txtNombre'];
-            $record ['fecha_publicacion'] = $_POST['dateFecha'];
-            $record ['num_capitulos'] = $_POST['numCapitulos'];
-            $record ['num_paginas'] = $_POST['numPaginas'];
-            $record ['resena'] = $_POST['txtResena'];
-            $record ['portada'] = $_POST['imgPortada'];
-            $record ['id_editorial'] = $_POST['selectEditorial'];
-            $record ['id_estatus'] = $_POST['selectEstatus'];
-            $this->db->autoExecute($table,$record,'INSERT');
+            $id_info_autor = $_POST['selectAutor'];
+            $nombre = $_POST['txtNombre'];
+            $fecha_publicacion = $_POST['dateFecha'];
+            $num_paginas = $_POST['numPaginas'];
+            $num_capitulos = $_POST['numCapitulos'];
+            $resena = $_POST['txtResena'];
+            $portada = $_POST['imgPortada'];
+            $id_editorial = $_POST['selectEditorial'];
+            $id_estatus = $_POST['selectEstatus'];
+            $query = 'INSERT INTO `libro`
+            (id_info_autor, nombre, fecha_publicacion, num_capitulos, num_paginas, resena, portada, id_editorial, id_estatus) 
+            VALUES ('.$id_info_autor.',\''.$nombre.'\',\''.$fecha_publicacion.'\','.$num_capitulos.','.$num_paginas.',\''.$resena.'\',\''.$portada.'\','.$id_editorial.', '.$id_estatus.')';
+           $this->db->Execute($query);
         }
         public function updateLibro(){
             $table = 'libro';
+            $id_libro = $_POST['hddId'];
+            $id_info_autor = $_POST['selectAutor'];
+            $nombre = $_POST['txtNombre'];
+            $fecha_publicacion = $_POST['dateFecha'];
+            $num_paginas = $_POST['numPaginas'];
+            $num_capitulos = $_POST['numCapitulos'];
+            $resena = $_POST['txtResena'];
+            $portada = $_POST['imgPortada'];
+            $id_editorial = $_POST['selectEditorial'];
+            $id_estatus = $_POST['selectEstatus'];
+            /*$query = 'UPDATE libro 
+            SET id_info_autor='.$id_info_autor.',
+            nombre=\''.$nombre.'\',
+            fecha_publicacion=\''.$fecha_publicacion.'\',
+            num_capitulos='.$num_capitulos.',
+            num_paginas='.$num_paginas.',
+            resena=\''.$resena.'\',
+            portada=\''.$portada.'\',
+            id_editorial='.$id_editorial.',
+            id_estatus='.$id_estatus.'
+            WHERE id_libro='.$id_libro;
+            echo $query;
+            $this->db->Execute($query);*/
             $record = array ();
-            $record ['id_info_autor'] = $_POST['SelectAutor'];
-            $record ['nombre'] = $_POST['txtNombre'];
-            $record ['fecha_publicacion'] = $_POST['dateFecha'];
-            $record ['num_capitulos'] = $_POST['numCapitulos'];
-            $record ['num_paginas'] = $_POST['numPaginas'];
-            $record ['resena'] = $_POST['txtResena'];
-            $record ['portada'] = $_POST['imgPortada'];
-            $this->db->autoExecute($table,$record,'UPDATE', 'idMensaje = '.'\''.$_POST['hddId'].'\'');
+            $record ['id_info_autor'] = $id_info_autor;
+            $record ['nombre'] = $nombre;
+            $record ['fecha_publicacion'] = $fecha_publicacion;
+            $record ['num_capitulos'] = $num_capitulos;
+            $record ['num_paginas'] = $num_paginas;
+            $record ['resena'] = $resena;
+            $record ['portada'] = $portada;
+            $record ['id_editorial'] = $id_editorial;
+            $record ['id_estatus'] = $id_estatus;
+            ECHO $this->db->autoExecute($table,$record,'UPDATE' , 'id_libro='.$id_libro.' ');
+
+            
         }
     }
 ?>

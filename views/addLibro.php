@@ -10,7 +10,6 @@
     $numModel = new MensajesModelCarrito();
     $nomEditorial = new MensajesEditorial();
     $nomCategoria = new MensajesCategoria();
-    $mensajes5 = $msjModel->getAllLibro();
     $mensajes4 = $nomCategoria->getNomCategoria();
     $mensajes3 = $nomEditorial->getNomEditorial();
     $mensajes2 = $numModel->getAllCarritonum($id_usuario);
@@ -29,10 +28,11 @@
     <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
     <link rel="stylesheet" href="../assets/css/infoLib.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 <script>
     function editar(idMjs, nombre,  fecha, num_capitulos, num_paginas, resena){
         document.getElementById('hddId').value = idMjs;
@@ -42,6 +42,7 @@
         document.getElementById('numPaginas').value = num_paginas;
         document.getElementById('txtResena').value = resena;
     }
+
     function insertar(){
         var formData = $('#frmaddlibro').serialize();
         $.ajax({
@@ -53,8 +54,17 @@
             }
         })
     }
+    function eliminar(id) {
+      $.post({
+        type: "POST",        
+        url: "../controller/ctrLibro.php?opc=3",
+        data: {idMsj:id},
+        success: function (data) {
+          $('#resAJAX').html(data);
+        },
+      })
+    }
 </script>
-
 </head>
 <!--Cuerpo-->
 <body>
@@ -130,7 +140,7 @@
     <main>
         <div class="addlibro container">
         <h3>Libros</h3><div id="resAJAX"></div>
-            <form id="frmaddlibro" method = "post">
+            <form id="frmaddlibro" >
                 <input type="hidden" id="hddId" name="hddId">
                 <div class="form-group">
                     <label for="selectAutor">Autor</label>
@@ -150,7 +160,7 @@
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="datefecha">fecha</label>
+                    <label for="dateFecha">fecha</label>
                     <input type="date" id="dateFecha" name="dateFecha" class="form-control">
                 </div>
                 <div class="form-group">
@@ -181,6 +191,7 @@
                         }
                     ?>
                     </select>
+                </div>
                 <div class="form-group">
                     <label for="selectEstatus">Categoria</label>
                     <select name="selectEstatus" id="selectEstatus" class="form-control">
@@ -208,44 +219,8 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                      while(!$mensajes5->EOF){
-                    ?>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>
-                            <?php
-                                if (isset($mensajes5->fields[0])) {
-                                    $url_imagen = htmlspecialchars($mensajes5->fields[1], ENT_QUOTES, 'UTF-8');
-                                    echo '<div class="centrar-imagen">';
-                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
-                                    echo '</div>';
-                                } else {
-                                    echo 'La URL de la imagen no está disponible.';
-                                }
-                            ?>
-                        </td>
-                        <td><h1><?php echo $mensajes5->fields[2]?></h1></td>
-                        <td><h1><?php echo $mensajes5->fields[3]?></h1></td>
-                        <td><h1><?php echo $mensajes5->fields[4]?></h1></td>
-                        <td>
-                            <form   method="post">
-                                <input type="hidden" id="actualizar" name="actualizar" value = "2">
-                                <button  type="submit" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                            </form>
-                        </td>
-                        <td>
-                          <form action=<?php echo '../controller/ctrLibro.php?id='.$mensajes5->fields[0].' ' ?> method="post">
-                            <input type="hidden" id="eliminar" name="eliminar" value = "3">
-                            <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
-                          </form>
-                        </td>
-                    </tr>
-                    <?php
-                    $mensajes5->moveNext();
-                    }
-                    ?>
+                <tbody id="tbLibros">
+                    
                 </tbody>
             </table>
         </div>
@@ -304,3 +279,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
+<script>
+  $( document ).ready(function() {
+    $.ajax({
+        type: "POST", 
+        data:{},       
+        url: "../controller/ctrLibro.php?opc=4",
+        success: function (data) {
+          $('#tbLibros').html(data);
+        }
+      })
+  });
+</script>
