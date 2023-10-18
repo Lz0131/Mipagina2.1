@@ -85,7 +85,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./siguiendo.php">
+                        <a class="nav-link disabled" href="./siguiendo.php">
                           <i class="fa fa-book">
                             <span class="badge badge-danger">11</span>
                           </i>
@@ -193,8 +193,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="selectEstatus">Categoria</label>
-                    <select name="selectEstatus" id="selectEstatus" class="form-control">
+                    <label for="selectCategoria">Categoria</label>
+                    <select name="selectCategoria" id="selectCategoria" class="form-control">
                     <?php
                         while(!$mensajes4->EOF){
                     ?>
@@ -217,11 +217,10 @@
                         <th scope="col">Fecha de publicacion</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody id="tbLibros">
-                    
-                </tbody>
+                <tbody id="tbLibros"></tbody>
             </table>
         </div>
     </main>

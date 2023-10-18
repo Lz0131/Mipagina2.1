@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./siguiendo.php">
+                        <a class="nav-link disabled" href="./siguiendo.php">
                           <i class="fa fa-book">
                             <span class="badge badge-danger">11</span>
                           </i>

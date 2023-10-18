@@ -53,6 +53,11 @@ if( isset($_GET['opc']) ){
                 <td>
                     <input type="button" class="btn btn-danger" value="Eliminar" onclick="eliminar('.$mensajes5->fields[0].')">
                 </td>
+                <td>
+                    <a href ="./infoLib.php?opc='.$mensajes5->fields[0].'">
+                        <button  type="submit" class="btn"><i class="fa fa-share-square-o" aria-hidden="true">Visitar</i></button>
+                    </a>
+                </td>
             </tr>';
             $mensajes5->moveNext();
         }

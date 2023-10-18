@@ -13,6 +13,7 @@
         private $id_editorial;
         private $id_estatus;
         private $cantidad;
+        private $id_categoria;
 
         private $db;
 
@@ -80,10 +81,14 @@
             $portada = $_POST['imgPortada'];
             $id_editorial = $_POST['selectEditorial'];
             $id_estatus = $_POST['selectEstatus'];
+            $id_categoria = $_POST['selectCategoria'];
             $query = 'INSERT INTO `libro`
             (id_info_autor, nombre, fecha_publicacion, num_capitulos, num_paginas, resena, portada, id_editorial, id_estatus) 
             VALUES ('.$id_info_autor.',\''.$nombre.'\',\''.$fecha_publicacion.'\','.$num_capitulos.','.$num_paginas.',\''.$resena.'\',\''.$portada.'\','.$id_editorial.', '.$id_estatus.')';
            $this->db->Execute($query);
+           $queryCategoria = 'INSERT INTO categoria_libro (id_libro, id_categoria) 
+           VALUES ('.$id_libro.','.$id_categoria.')';
+            $this->db->Execute($queryCategoria);
         }
         public function updateLibro(){
             $table = 'libro';
@@ -97,6 +102,7 @@
             $portada = $_POST['imgPortada'];
             $id_editorial = $_POST['selectEditorial'];
             $id_estatus = $_POST['selectEstatus'];
+            $id_categoria = $_POST['selectCategoria'];
             $query = 'UPDATE libro 
             SET id_info_autor ='.$id_info_autor.',
             nombre = \''.$nombre.'\',
@@ -108,21 +114,11 @@
             id_editorial ='.$id_editorial.',
             id_estatus ='.$id_estatus.' 
              WHERE id_libro = '.$id_libro;
-            //echo $query;
             $this->db->Execute($query);
-           /* $record = array ();
-            $record ['id_info_autor'] = $id_info_autor;
-            $record ['nombre'] = $nombre;
-            $record ['fecha_publicacion'] = $fecha_publicacion;
-            $record ['num_capitulos'] = $num_capitulos;
-            $record ['num_paginas'] = $num_paginas;
-            $record ['resena'] = $resena;
-            $record ['portada'] = $portada;
-            $record ['id_editorial'] = $id_editorial;
-            $record ['id_estatus'] = $id_estatus;
-            ECHO $this->db->autoExecute($table,$record,'UPDATE' , 'id_libro='.$id_libro.' '); */
-
-            
+            $queryCategoria = 'UPDATE categoria_libro 
+            SET id_categoria ='.$id_categoria.
+            ' WHERE id_libro='.$id_libro;
+            $this->db->Execute($queryCategoria);
         }
     }
 ?>

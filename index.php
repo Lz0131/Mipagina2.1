@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./views/favorito.php">
+                        <a class="nav-link disabled" href="./views/favorito.php">
                           <i class="fa fa-book">
                             <span class="badge badge-danger">11</span>
                           </i>
@@ -81,7 +81,7 @@
                       </a>
                       <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                           <a class="dropdown-item" href="./views/login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
-                          <a class="dropdown-item" href="./signup.html">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
+                          <a class="dropdown-item" href="./signup.php">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item disabled" href="#">Salir</a> <!--esta debe de estar oculta asta que se inicie sesion-->
                       </div>

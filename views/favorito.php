@@ -47,7 +47,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./siguiendo.php">
+                        <a class="nav-link disabled" href="./siguiendo.php">
                           <i class="fa fa-book">
                             <span class="badge badge-danger">11</span>
                           </i>
@@ -125,7 +125,7 @@
                                 if (isset($mensajes->fields[0])) {
                                     $url_imagen = htmlspecialchars($mensajes->fields[0], ENT_QUOTES, 'UTF-8');
                                     echo '<div class="centrar-imagen">';
-                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
+                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . '" width="300" height="450"">';
                                     echo '</div>';
                                 } else {
                                     echo 'La URL de la imagen no está disponible.';
@@ -133,7 +133,11 @@
                             ?>
                         </td>
                         <td><h1><?php echo $mensajes->fields[1]?></h1></td>
-                        <td><button  type="submit" action=<?php echo '../controller/ctrfavorito.php?id='.$mensajes->fields[3].' ' ?> class="btn" style='font-size:24px'><i class="fa fa-times-circle" aria-hidden="true"></i></button></td>
+                        <td> 
+                          <form action="<?php echo '../controller/ctrfavorito.php?id='.$mensajes->fields[3].' ' ?>" method="post">
+                            <button  type="submit" class="btn" style='font-size:24px'><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+                          </form>
+                        </td>
                         <td><button  type="submit" onclick= "" class="btn" style='font-size:24px'><i class="fa fa-book" aria-hidden="true"></i></button></td>
                     </tr>
                     <?php

@@ -44,11 +44,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./siguiendo.php">
+                        <a class="nav-link disabled" href="./favoritos.php">
                           <i class="fa fa-book">
                             <span class="badge badge-danger">11</span>
                           </i>
-                          Siguiendo
+                          Historial
                         </a>
                     </li>
                     <li class="nav-item">
@@ -79,8 +79,8 @@
                           <i class="fa fa-user-circle" aria-hidden="true"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <a class="dropdown-item" href="./login.html">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
-                          <a class="dropdown-item" href="./signup.html">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
+                          <a class="dropdown-item" href="./login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
+                          <a class="dropdown-item" href="#">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item disabled" href="#">Salir</a> <!--esta debe de estar oculta asta que se inicie sesion-->
                       </div>
