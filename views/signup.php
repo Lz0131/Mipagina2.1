@@ -21,10 +21,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
 <!--Fontawesome CDN-->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-</head>
+  <script>
+    function validarFormulario() {
+        // Obtener los valores de los campos
+        var nombre = document.getElementById("txtnombre").value;
+        var ape_paterno = document.getElementById("txtape_p").value;
+        var ape_materno = document.getElementById("txtape_m").value;
+        var correo = document.getElementById("txtcorreo").value;
+        var password = document.getElementById("txtpassword").value;
+
+        // Verificar que todos los campos estén llenos
+        if (nombre === "" || ape_paterno === "" || ape_materno === "" || correo === "" || password === "") {
+            alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
+            return false; // Evita que se llame a la función insertar()
+        }
+
+        // Si todos los campos están llenos, llamar a la función insertar()
+        insertar();
+    }
+
+    function insertar(){
+      var formData = $('#frmRegistro').serialize();
+        $.ajax({
+            type: "POST",
+            url: "../controller/ctrRegistro.php",
+            data: formData,
+            success: function(data){
+              $('#resAJAX').html(data);
+            }
+        })
+    }
+    function mostrarAlerta() {
+            alert("La cuenta ya existe");
+        }
+  </script>
+  </head>
 <!--Cuerpo-->
 <body>
     <!--Barra de Navegacion Header-->
@@ -100,7 +134,7 @@
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
-                    <h3>Iniciar Sesión</h3>
+                    <h3>Registrarse</h3>
                     <div class="d-flex justify-content-end social_icon">
                         <span><i class="fab fa-facebook-square"></i></span>
                         <span><i class="fab fa-google-plus-square"></i></span>
@@ -108,7 +142,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form id = "frmRegistro"><div id="resAJAX"></div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -129,7 +163,7 @@
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
                             <input type="text" id="txtcorreo" name="txtcorreo" class="form-control" placeholder="Correo">
                         </div>
@@ -137,13 +171,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" id="txtpassword" name="txtpassword" class="form-control" placeholder="contraseña">
-                        </div>
-                        <div class="row align-items-center remember">
-                            <input type="checkbox">Recuerdame
+                            <input type="password" id="txtpassword" name="txtpassword" class="form-control" placeholder="Contraseña">
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Iniciar sesión" class="btn float-right login_btn">
+                            <button onclick = "validarFormulario()" type="button" class="btn float-right login_btn">Registrarse</button>
                         </div>
                     </form>
                 </div>

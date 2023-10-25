@@ -79,7 +79,7 @@
                           <i class="fa fa-user-circle" aria-hidden="true"></i>
                       </a>
                       <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <a class="dropdown-item" href="./login.html">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
+                          <a class="dropdown-item" href="./login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
                           <a class="dropdown-item" href="./signup.php">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item disabled" href="#">Salir</a> <!--esta debe de estar oculta asta que se inicie sesion-->
@@ -132,10 +132,10 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        No tienes cuenta?<a href="./signup.html">Registrarse</a>
+                        No tienes cuenta?<a href="./signup.php">Registrarse</a>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="./recover_password.html">Olvidaste tu contraseña?</a>
+                        <a href="./recover_password.php">Olvidaste tu contraseña?</a>
                     </div>
                 </div>
             </div>

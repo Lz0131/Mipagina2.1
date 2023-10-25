@@ -72,7 +72,7 @@
         public function Updateminus($id_libro){
             $query = 'UPDATE carrito
             SET cantidad = cantidad - 1
-            WHERE id_usuario = 1 AND id_libro ='. $id_libro;
+            WHERE id_usuario = 1 AND cantidad >=2 AND id_libro ='. $id_libro;
             $this->db->Execute($query);
         }
     }

@@ -80,15 +80,14 @@
             $resena = $_POST['txtResena'];
             $portada = $_POST['imgPortada'];
             $id_editorial = $_POST['selectEditorial'];
-            $id_estatus = $_POST['selectEstatus'];
             $id_categoria = $_POST['selectCategoria'];
             $query = 'INSERT INTO `libro`
             (id_info_autor, nombre, fecha_publicacion, num_capitulos, num_paginas, resena, portada, id_editorial, id_estatus) 
-            VALUES ('.$id_info_autor.',\''.$nombre.'\',\''.$fecha_publicacion.'\','.$num_capitulos.','.$num_paginas.',\''.$resena.'\',\''.$portada.'\','.$id_editorial.', '.$id_estatus.')';
+            VALUES ('.$id_info_autor.',\''.$nombre.'\',\''.$fecha_publicacion.'\','.$num_capitulos.','.$num_paginas.',\''.$resena.'\',\''.$portada.'\','.$id_editorial.', '.$id_categoria.')';
            $this->db->Execute($query);
-           $queryCategoria = 'INSERT INTO categoria_libro (id_libro, id_categoria) 
-           VALUES ('.$id_libro.','.$id_categoria.')';
-            $this->db->Execute($queryCategoria);
+           //$queryCategoria = 'INSERT INTO categoria_libro (id_libro, id_categoria) 
+           //VALUES ('.$id_libro.','.$id_categoria.')';
+           //$this->db->Execute($queryCategoria);
         }
         public function updateLibro(){
             $table = 'libro';
@@ -101,7 +100,6 @@
             $resena = $_POST['txtResena'];
             $portada = $_POST['imgPortada'];
             $id_editorial = $_POST['selectEditorial'];
-            $id_estatus = $_POST['selectEstatus'];
             $id_categoria = $_POST['selectCategoria'];
             $query = 'UPDATE libro 
             SET id_info_autor ='.$id_info_autor.',
@@ -112,7 +110,7 @@
             resena = \''.$resena.'\',
             portada = \''.$portada.'\',
             id_editorial ='.$id_editorial.',
-            id_estatus ='.$id_estatus.' 
+            id_categoria ='.$id_categoria.' 
              WHERE id_libro = '.$id_libro;
             $this->db->Execute($query);
             $queryCategoria = 'UPDATE categoria_libro 
