@@ -1,9 +1,10 @@
 <?php
+    session_start();
     require_once '../models/carrito.php';
     require_once '../models/conexion.php';
     include_once '../assets/adodb5/adodb.inc.php';
     $numModel = new MensajesModelCarrito();
-    $id_usuario = 1;
+    $id_usuario = $_SESSION['id_usuario'];
     $mensajes2 = $numModel->getAllCarritonum($id_usuario);
 ?>
 <!DOCTYPE html>
@@ -23,7 +24,28 @@
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+<script>
+  function validarFormulario(){
+    var correo = document.getElementById("txtemail").value;
+    var password = document.getElementById("txtpassword").value;
+    if(correo === "" || password === ""){
+      alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
+      return false; 
+    }
+    verificar();
+  }
+  function verificar(){
+    var formData = $('#frmInicioSesion').serialize();
+    $.ajax({
+      type: "POST",
+      url: "../controller/ctrInicioSesion.php",
+      data: formData,
+      success: function(data){
+        window.location.href = "../index.php";
+      }
+    })
+  }
+</script>
 </head>
 <!--Cuerpo-->
 <body>
@@ -108,7 +130,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form id = "frmInicioSesion"><div id="resAJAX"></div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -126,7 +148,7 @@
                             <input type="checkbox">Recuerdame
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Iniciar sesión" class="btn float-right login_btn">
+                            <button type="button" onclick="validarFormulario()" class="btn float-right login_btn">Iniciar sesión</button>
                         </div>
                     </form>
                 </div>

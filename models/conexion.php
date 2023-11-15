@@ -11,7 +11,7 @@
 
    public function conectar(){
         $con = ADONewConnection($this->DBType);
-        $con->debug = true;
+        $con->debug = false;
         $con->connect($this->DBServer,$this->DBUser,$this->DBPass,$this->DBName);
         return $con;
    }

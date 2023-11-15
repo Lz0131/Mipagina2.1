@@ -85,9 +85,9 @@
             (id_info_autor, nombre, fecha_publicacion, num_capitulos, num_paginas, resena, portada, id_editorial, id_estatus) 
             VALUES ('.$id_info_autor.',\''.$nombre.'\',\''.$fecha_publicacion.'\','.$num_capitulos.','.$num_paginas.',\''.$resena.'\',\''.$portada.'\','.$id_editorial.', '.$id_categoria.')';
            $this->db->Execute($query);
-           //$queryCategoria = 'INSERT INTO categoria_libro (id_libro, id_categoria) 
-           //VALUES ('.$id_libro.','.$id_categoria.')';
-           //$this->db->Execute($queryCategoria);
+           $ultimoIdLibro = "SELECT LAST_INSERT_ID();";
+           $rs = $this->db->Execute($ultimoIdLibro);
+           return $rs;
         }
         public function updateLibro(){
             $table = 'libro';
