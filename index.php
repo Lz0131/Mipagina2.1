@@ -44,7 +44,6 @@
 <body>
     <!--Barra de Navegacion Header-->
     <header id = "hea">
-        
     </header> 
     <!--Carrusel-->
     <div class="banner">
