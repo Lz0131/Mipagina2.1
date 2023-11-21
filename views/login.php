@@ -1,121 +1,62 @@
-<?php
-    session_start();
-    require_once '../models/carrito.php';
-    require_once '../models/conexion.php';
-    include_once '../assets/adodb5/adodb.inc.php';
-    $numModel = new MensajesModelCarrito();
-    $id_usuario = $_SESSION['id_usuario'];
-    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfxkBYpAAAAAKw8osjFZVxMaCsnOWhGYNVo-xXg"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
-    <link rel="stylesheet" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../assets/css/login.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
 <!--Fontawesome CDN-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<script>
-  function validarFormulario(){
-    var correo = document.getElementById("txtemail").value;
-    var password = document.getElementById("txtpassword").value;
-    if(correo === "" || password === ""){
-      alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
-      return false; 
-    }
-    verificar();
+    <script>
+  function validarFormulario() {
+    grecaptcha.ready(function () {
+      grecaptcha.execute('6LfxkBYpAAAAAKw8osjFZVxMaCsnOWhGYNVo-xXg', { action: 'submit' }).then(function (token) {
+        var correo = document.getElementById("txtemail").value;
+        var password = document.getElementById("txtpassword").value;
+
+        if (correo === "" || password === "") {
+          alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
+          return false;
+        }
+
+        verificar(token);
+      });
+    });
   }
-  function verificar(){
+
+  function verificar(token) {
     var formData = $('#frmInicioSesion').serialize();
+    formData += '&token=' + token;
+
     $.ajax({
       type: "POST",
       url: "../controller/ctrInicioSesion.php",
       data: formData,
-      success: function(data){
+      success: function (data) {
         window.location.href = "../index.php";
       }
-    })
+    });
+  }
+
+  function onSubmit(token) {
+    document.getElementById("recaptchaResponse").value = token;
+    document.getElementById("frmInicioSesion").submit();
   }
 </script>
+
 </head>
 <!--Cuerpo-->
 <body>
     <!--Barra de Navegacion Header-->
-    <header>
-        <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="../index.php"><img height="100" src="" alt=""> <img src="../assets/img/logo1.png" alt="" width="80" height="60"> </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../index.php">
-                            <i class="fa fa-home"></i>
-                            Inicio
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="./siguiendo.php">
-                          <i class="fa fa-book">
-                            <span class="badge badge-danger">11</span>
-                          </i>
-                          Siguiendo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./favorito.php">
-                          <i class="fa fa-heart">
-                            <span class="badge badge-danger"><?php echo '1'; ?></span>
-                          </i>
-                          Favoritos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="./carrito.php">
-                        <i class="fa fa-shopping-cart" aria-hidden="true">
-                          <span class="badge badge-danger"><?php echo $mensajes2->fields[0] ?></span>
-                        </i>
-                        Carrito
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="./addLibro.php">
-                        <i class="fa fa-shopping-cart" aria-hidden="true">
-                        </i>
-                        Add Libros
-                      </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-user-circle" aria-hidden="true"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                          <a class="dropdown-item" href="./login.php">Iniciar Sesión</a> <!--Esta se deberia ocultar cuando se inicie sesión-->
-                          <a class="dropdown-item" href="./signup.php">Registrarse</a> <!--esta debe de estar visible asta que se inicie sesion-->
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item disabled" href="#">Salir</a> <!--esta debe de estar oculta asta que se inicie sesion-->
-                      </div>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Buscador">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                </form>
-            </div>
-        </nav>
+    <header id = "head">
     </header> 
     <!--Cuadro de inicio de sesion-->
     <div class="container">
@@ -148,7 +89,8 @@
                             <input type="checkbox">Recuerdame
                         </div>
                         <div class="form-group">
-                            <button type="button" onclick="validarFormulario()" class="btn float-right login_btn">Iniciar sesión</button>
+                            <button type="button" onclick="validarFormulario()" class="btn float-right login_btn" id="btnLogin">Iniciar sesión</button>
+                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
                         </div>
                     </form>
                 </div>
@@ -217,3 +159,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
+<script>
+$(document).ready(function(){
+    $.ajax({
+      type: "POST",
+      url: "../controller/ctrHeader.php?pag=6",
+      data: { pag: '6' },
+      success: function(data) {
+        $('#head').html(data); // Corregido aquí
+      },
+      error: function(error) {
+        console.error('Error al cargar el encabezado', error);
+      }
+    })
+  });
+</script>
