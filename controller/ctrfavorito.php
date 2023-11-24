@@ -1,39 +1,20 @@
 <?php
+session_start();
 require_once '../models/favorito.php';
 require_once '../models/conexion.php';
 include_once '../assets/adodb5/adodb.inc.php';
 
 $msjModel = new MensajesModel();
-$id_usuario = '1';  // Supongamos que el ID del usuario es 1
-$id_libro = $_GET['id'];
+//$id_usuario = '1';  // Supongamos que el ID del usuario es 1
 
-// Verifica si 'txtCantidad' está presente en $_POST
-$result = $msjModel->getAllFavoritosnum($id_usuario, $id_libro);
-$r= $result->fields[0];
-    if ($r == 1) {
+    $id_usuario = $_SESSION['id_usuario'];
+    $id_libro = $_GET['id_libro'];
+    $result = $msjModel->getAllFavoritosnum($id_usuario, $id_libro);
+    if ($result == 1) {
         $msjModel->DeleteFavorito($id_usuario, $id_libro);
         header("Location: " . $_SERVER["HTTP_REFERER"]);
-    } else if ($r == 0) {
+    } else if ($result == 0) {
         $msjModel->InsertFavorito($id_usuario, $id_libro);
         header("Location: " . $_SERVER["HTTP_REFERER"]);
-    }
-    if( isset($_GET['opc']) ){
-        $msjModel = new MensajesModel();
-        switch($_GET['opc']){
-            case 1: // INSERT TO DB
-                
-                break;
-            case 2: // UPDATE TO BD
-                //$msjModel->updateMensaje();
-                break;
-            case 3: // DELETE TO DB
-                $idMsj = $_POST['idMsj'];
-                $msjModel->DeleteFavorito($idMsj);
-                //echo 'Mensaje AJAX';
-                break;
-            case 4: // SELECT TO DB
-                echo getMensajes ($msjModel);
-                break;
-        }
     }
 ?>

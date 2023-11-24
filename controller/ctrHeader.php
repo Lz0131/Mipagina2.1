@@ -14,9 +14,9 @@
         //echo '2';
         $id_usuario = $_SESSION['id_usuario'];
         $numFav = $msjFav->getAllTotalFavoritosnum($id_usuario);
-        //echo '3';
-        //echo $id_usuario;
-        //echo $msjRol->getRol($id_usuario);
+        //echo 'num fav '.$numFav;
+        //echo 'id usuario'.$id_usuario;
+        //echo 'rol '. $msjRol->getRol($id_usuario);
         //Rol usuario
         if($msjRol->getRol($id_usuario) == 1){
             //echo '4';

@@ -65,10 +65,10 @@
             return $rs;
         }
         public function DeleteLibro($id_libro){
-            echo $id_libro;
-            $query =  'DELETE FROM libro WHERE id_libro='.$id_libro;
-            echo $query;
-            $this->db->Execute($query);
+            //echo $id_libro;
+            $query =  "DELETE FROM libro WHERE id_libro=$id_libro";
+            //echo $query;
+            $this->db->execute($query);
         }
         public function InsertLibro(){
             $table = 'libro';
@@ -85,22 +85,8 @@
             (id_info_autor, nombre, fecha_publicacion, num_capitulos, num_paginas, resena, portada, id_editorial, id_estatus) 
             VALUES ('.$id_info_autor.',\''.$nombre.'\',\''.$fecha_publicacion.'\','.$num_capitulos.','.$num_paginas.',\''.$resena.'\',\''.$portada.'\','.$id_editorial.', '.$id_categoria.')';
            $this->db->Execute($query);
-           $ultimoIdLibro = "SELECT LAST_INSERT_ID();";
-           $rs = $this->db->Execute($ultimoIdLibro);
-           return $rs;
         }
-        public function updateLibro(){
-            $table = 'libro';
-            $id_libro = $_POST['hddId'];
-            $id_info_autor = $_POST['selectAutor'];
-            $nombre = $_POST['txtNombre'];
-            $fecha_publicacion = $_POST['dateFecha'];
-            $num_paginas = $_POST['numPaginas'];
-            $num_capitulos = $_POST['numCapitulos'];
-            $resena = $_POST['txtResena'];
-            $portada = $_POST['imgPortada'];
-            $id_editorial = $_POST['selectEditorial'];
-            $id_categoria = $_POST['selectCategoria'];
+        public function updateLibro($id_libro, $id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria){
             $query = 'UPDATE libro 
             SET id_info_autor ='.$id_info_autor.',
             nombre = \''.$nombre.'\',
@@ -118,5 +104,34 @@
             ' WHERE id_libro='.$id_libro;
             $this->db->Execute($queryCategoria);
         }
+
+        public function buscaLibro($id_info_autor, $nombre){
+            $query = $this->db->prepare("SELECT id_libro FROM libro WHERE id_info_autor = $id_info_autor AND nombre = $nombre");
+            $existe = $query->fetchColumn();
+            return $existe;
+        }
+
+        public function crearLibroYCategoria($id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria){
+            $this->db->beginTransaction();
+            try {
+                $this->InsertLibro($id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria); //creamos el usuario
+                $id_libro = $this->trerCorreo($email); //solicitamos el correo
+                $id_rol = 1;
+                $this->crearRol($id_usuario, $id_rol); //creamos el usuario
+                echo '4';
+                $this->db->commit(); //fin de la transaccion
+                echo '5';
+            } catch (PDOException $e) {
+                $this->db->rollBack();
+                $response = array(
+                    'success' => false,
+                    'message' => 'Error: Transacción fallida ' . $e->getMessage()
+                );
+    
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }
+        }
+
     }
 ?>

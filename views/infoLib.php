@@ -1,16 +1,5 @@
 <?php
-    require_once '../models/portadalib.php';
-    require_once '../models/carrito.php';
-    require_once '../models/conexion.php';
-    include_once '../assets/adodb5/adodb.inc.php';
-    $id_libro = $_GET['opc'];
-    $id_usuario = 1;
-    $numModel = new MensajesModelCarrito();
-    $msjModel = new MensajesModel();
-    $mensajes = $msjModel->getAllMensajes($id_libro);
-    $mensajes2 = $msjModel->getAllAutor($id_libro);
-    $mensajes3 = $msjModel->getAllinfo_Autor($id_libro);
-    $mensajes4 = $numModel->getAllCarritonum($id_usuario);
+    $id_libro = $_GET['id_libro'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,79 +24,12 @@
 <!--Cuerpo-->
 <body>
     <!--Barra de Navegacion Header-->
+    
     <header id = "head">
     </header> 
     <!--Cuadro de informacion del libro-->
-    <div>
-        <h1 id="txtTitulo" name="txtTitulo"><?php echo $mensajes->fields[2]?></h1>
-        <?php
-            if (isset($mensajes->fields[9])) {
-                $url_imagen = htmlspecialchars($mensajes->fields[9], ENT_QUOTES, 'UTF-8');
-                echo '<div class="centrar-imagen">';
-                echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
-                echo '</div>';
-            } else {
-                echo 'La URL de la imagen no está disponible.';
-            }
-        ?>
-        <div class="container-favorito" style="text-align: center;">
-          <form action=<?php echo '../controller/ctrfavorito.php?id='.$id_libro.' ' ?> method="post">
-          <button  type="submit" class="btn"><i class="fa fa-heart" aria-hidden="true" style="color: black;">Favorito</i></button>
-          </form>
-        </div>
-       
-        <div class="container-carrito">
-            <form action=<?php echo '../controller/carrito.php?id='.$id_libro.' ' ?> method="post">
-              <label for="txtCantidad">Cantidad</label>
-              <input type="number" id="txtCantidad" name="txtCantidad" />
-              <button  type="submit" class="btn"><i class="fa fa-cart-plus" aria-hidden="true">Carrito</i></button>
-            </form>
-        </div>
-        
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <!-- panel 1 -->
-            <div class="panel panel-default">
-                <!--wrap panel heading in span to trigger image change as well as collapse -->
-                <span class="side-tab" data-target="#tab1" data-toggle="tab" role="tab" aria-expanded="false">
-                    <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
-                        data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                        aria-controls="collapseOne">
-                        <h4 class="panel-title">Informacion General</h4>
-                    </div>
-                </span>
-
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                    aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <!-- Tab content goes here -->
-                        <br>
-                        Titulo<?php echo $mensajes->fields[2]?><br>
-                        Autor: <?php echo $mensajes2->fields[0]?> <?php echo $mensajes2->fields[1]?> <?php echo $mensajes2->fields[2]?><br>
-                        Informacion del autor: <?php echo $mensajes3->fields[0]?> <br>
-                        Idioma Original: Koreano <br>
-                        Estatus: Completada <br>
-                        Generos: Apocalipsis, Acción, Aventura, Drama
-                    </div>
-                </div>
-            </div>
-            <!-- panel 2 -->
-            <div class="panel panel-default">
-                <!--wrap panel heading in span to trigger image change as well as collapse -->
-                <span class="side-tab" data-target="#tab2" data-toggle="tab" role="tab" aria-expanded="false">
-                    <div class="panel-heading" role="tab" id="headingOne" data-toggle="collapse"
-                        data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                        aria-controls="collapseOne">
-                        <h4 class="panel-title">Sinopsis</h4>
-                    </div>
-                </span>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                    aria-labelledby="headingOne">
-                    <div class="panel-body">
-                        <?php echo $mensajes->fields[6]?>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <input type="hidden" id="id_libro" name="id_libro" value = <?php echo $id_libro; ?>>
+    <div id="divCarrito">
     </div>
     <!--Pie de Pagina Footer--> 
     <footer class="section footer-classic context-dark bg-image" style="background:black;">
@@ -165,6 +87,11 @@
 </html>
 <script>
 $(document).ready(function(){
+    h();
+    libro();
+  })
+
+  function h(){
     $.ajax({
       type: "POST",
       url: "../controller/ctrHeader.php?pag=0",
@@ -176,5 +103,21 @@ $(document).ready(function(){
         console.error('Error al cargar el encabezado', error);
       }
     })
-  });
+  }
+
+  function libro(){
+    var id_libro = $('#id_libro').val();
+    var urls = "../controller/ctrInfoLibro.php?id_libro=" + encodeURIComponent(id_libro);
+    $.ajax({
+      type: "POST",
+      url: urls,
+      data: {},
+      success: function(data) {
+        $('#divCarrito').html(data); // Corregido aquí
+      },
+      error: function(error) {
+        console.error('Error al cargar el encabezado', error);
+      }
+    })
+  }
 </script>

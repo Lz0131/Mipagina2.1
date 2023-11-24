@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../models/portadalib.php';
 require_once '../models/carrito.php';
 require_once '../models/conexion.php';
@@ -6,8 +7,8 @@ include_once '../assets/adodb5/adodb.inc.php';
 
 $msjModel = new MensajesModel();
 $msjCarrito =  new MensajesModelCarrito();
-$id_usuario = '1';  // Supongamos que el ID del usuario es 1
-$id_libro = $_GET['id']; 
+$id_usuario = $_SESSION['id_usuario'];
+$id_libro = $_GET['id_libro']; 
   // Supongamos que el ID del libro es 1
 
 // Verifica si 'txtCantidad' está presente en $_POST

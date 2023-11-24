@@ -1,18 +1,10 @@
-<?php
-    require_once '../models/carrito.php';
-    require_once '../models/conexion.php';
-    include_once '../assets/adodb5/adodb.inc.php';
-    $numModel = new MensajesModelCarrito();
-    $id_usuario = 1;
-    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito</title>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
@@ -27,18 +19,17 @@
   <script>
     function validarFormulario() {
         // Obtener los valores de los campos
-        var nombre = document.getElementById("txtnombre").value;
-        var ape_paterno = document.getElementById("txtape_p").value;
-        var ape_materno = document.getElementById("txtape_m").value;
-        var correo = document.getElementById("txtcorreo").value;
-        var password = document.getElementById("txtpassword").value;
+        var nombre = document.getElementById("nombre").value;
+        var ape_paterno = document.getElementById("apellido_p").value;
+        var ape_materno = document.getElementById("apellido_m").value;
+        var correo = document.getElementById("email").value;
+        var password = document.getElementById("contrasena").value;
 
         // Verificar que todos los campos estén llenos
         if (nombre === "" || ape_paterno === "" || ape_materno === "" || correo === "" || password === "") {
             alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
             return false; // Evita que se llame a la función insertar()
         }
-
         // Si todos los campos están llenos, llamar a la función insertar()
         insertar();
     }
@@ -52,7 +43,7 @@
             success: function(data){
               $('#resAJAX').html(data);
             }
-        })
+        });
     }
     function mostrarAlerta() {
             alert("La cuenta ya existe");
@@ -77,39 +68,40 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id = "frmRegistro"><div id="resAJAX"></div>
+                    <form method="post"  id = "frmRegistro"><div id="resAJAX"></div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="txtnombre" name="txtnombre" class="form-control" placeholder="Nombre">
+                            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="txtape_p" name="txtape_p" class="form-control" placeholder="Apellido paterno">
+                            <input type="text" id="apellido_p" name="apellido_p" class="form-control" placeholder="Apellido paterno">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="txtape_m" name="txtape_m" class="form-control" placeholder="Apellido materno">
+                            <input type="text" id="apellido_m" name="apellido_m" class="form-control" placeholder="Apellido materno">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             </div>
-                            <input type="text" id="txtcorreo" name="txtcorreo" class="form-control" placeholder="Correo">
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Correo">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" id="txtpassword" name="txtpassword" class="form-control" placeholder="Contraseña">
+                            <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="Contraseña">
                         </div>
                         <div class="form-group">
-                            <button onclick = "validarFormulario()" type="button" class="btn float-right login_btn">Registrarse</button>
+                            <div class="g-recaptcha" data-sitekey="6LfXi_8oAAAAAGeCsTaetGmZa-52MYSjUG9Y7km2"></div>
+                            <button type="submit" class="btn float-right login_btn">Registrarse</button>
                         </div>
                     </form>
                 </div>
@@ -169,6 +161,7 @@
           <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
         </div>
       </footer>
+      <script src="../js/registro.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfxkBYpAAAAAKw8osjFZVxMaCsnOWhGYNVo-xXg"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
@@ -16,41 +15,27 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script>
-  function validarFormulario() {
-    grecaptcha.ready(function () {
-      grecaptcha.execute('6LfxkBYpAAAAAKw8osjFZVxMaCsnOWhGYNVo-xXg', { action: 'submit' }).then(function (token) {
-        var correo = document.getElementById("txtemail").value;
-        var password = document.getElementById("txtpassword").value;
-
+      function validarFormulario() {
+        var correo = document.getElementById("email").value;
+        var password = document.getElementById("contrasena").value;
         if (correo === "" || password === "") {
           alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
           return false;
         }
-
-        verificar(token);
-      });
-    });
-  }
-
-  function verificar(token) {
-    var formData = $('#frmInicioSesion').serialize();
-    formData += '&token=' + token;
-
-    $.ajax({
-      type: "POST",
-      url: "../controller/ctrInicioSesion.php",
-      data: formData,
-      success: function (data) {
-        window.location.href = "../index.php";
+        verificar();
       }
-    });
-  }
-
-  function onSubmit(token) {
-    document.getElementById("recaptchaResponse").value = token;
-    document.getElementById("frmInicioSesion").submit();
-  }
-</script>
+      function verificar(){
+          jQuery.ajax({
+            url: '../controller/ctrInicioSesion.php',
+            type: 'POST',
+            dataType: 'json',
+            data: jQuery('#frmInicioSesion').serialize(),
+            success: function(data){
+              //window.location.href = "../index.php";
+            }
+          })
+        }
+    </script>
 
 </head>
 <!--Cuerpo-->
@@ -71,26 +56,25 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id = "frmInicioSesion"><div id="resAJAX"></div>
+                    <form  method="post"  id = "frmInicioSesion"><div id="resAJAX"></div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" id="txtemail" name="txtemail" class="form-control" placeholder="correo">
+                            <input type="text" id="email" name="email" class="form-control" placeholder="correo">
                             
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" id="txtpassword" name="txtpassword" class="form-control" placeholder="contraseña">
+                            <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="contraseña">
                         </div>
                         <div class="row align-items-center remember">
                             <input type="checkbox">Recuerdame
                         </div>
                         <div class="form-group">
-                            <button type="button" onclick="validarFormulario()" class="btn float-right login_btn" id="btnLogin">Iniciar sesión</button>
-                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                            <button type="submit" class="btn float-right login_btn" id="btnLogin">Iniciar sesión</button>
                         </div>
                     </form>
                 </div>
@@ -153,6 +137,7 @@
           <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
         </div>
       </footer>
+      <script src="../js/login.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

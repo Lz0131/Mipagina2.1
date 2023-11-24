@@ -7,16 +7,26 @@ include_once '../assets/adodb5/adodb.inc.php';
 
  
 if( isset($_GET['opc']) ){
-   $msjModel = new MensajesLibro();
+    $msjModel = new MensajesLibro();
+    $id_info_autor = $_POST['selectAutor'];
+    $nombre = $_POST['txtNombre'];
+    $fecha_publicacion = $_POST['dateFecha'];
+    $num_paginas = $_POST['numPaginas'];
+    $num_capitulos = $_POST['numCapitulos'];
+    $resena = $_POST['txtResena'];
+    $portada = $_POST['imgPortada'];
+    $id_editorial = $_POST['selectEditorial'];
+    $id_categoria = $_POST['selectCategoria'];
     switch($_GET['opc']){
         case 1: // INSERT TO DB
-            if(!empty($_POST['hddId']) )
-                $msjModel->updateLibro();
-            else
-                $msjModel->InsertLibro();
+            if(!empty($_POST['hddId']) ){
+                $id_libro = $_POST['hddId'];
+                $msjModel->updateLibro($id_libro, $id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria);
+            }else
+                $msjModel->InsertLibro($id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria);
             break;
         case 2: // UPDATE TO BD
-            $msjModel->updateLibro();
+            $msjModel->updateLibro($id_libro, $id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria);
             break;
         case 3: // DELETE TO DB
             $id_libro = $_POST['idMsj'];

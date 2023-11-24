@@ -1,14 +1,3 @@
-<?php
-    require_once '../models/carrito.php';
-    require_once '../models/conexion.php';
-    include_once '../assets/adodb5/adodb.inc.php';
-    $msjModel = new MensajesModelCarrito();
-    $numModel = new MensajesModelCarrito();
-    $id_usuario = 1;
-    $mensajes = $msjModel->getAllCarrito($id_usuario);
-    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
-    $mensajes3 = $msjModel->getSubTotal($id_usuario);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,72 +29,8 @@
   <main>
       <div class="carrito container">
           <h1>Carrito</h1>
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Portada</th>
-                      <th scope="col">Titulo</th>
-                      <th scope="col"></th>
-                      <th scope="col">Cantidad</th>
-                      <th scope="col"></th>
-                      <th scope="col"></th>
-                      <th scope="col">Subtotal</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <?php
-                    while(!$mensajes->EOF){
-                  ?>
-                  <tr>
-                      <th scope="row">1</th>
-                      <td>
-                          <?php
-                              if (isset($mensajes->fields[0])) {
-                                  $url_imagen = htmlspecialchars($mensajes->fields[0], ENT_QUOTES, 'UTF-8');
-                                  echo '<div class="centrar-imagen">';
-                                  echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
-                                  echo '</div>';
-                              } else {
-                                  echo 'La URL de la imagen no está disponible.';
-                              }
-                          ?>
-                      </td>
-                      <td><h1><?php echo $mensajes->fields[1]?></h1></td>
-                      <td>
-                        <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
-                          <input type="hidden" id="Minus" name="Minus" value = "1">
-                          <button  type="submit" class="btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                        </form>
-                      </td>
-                      <td><h1><?php echo $mensajes->fields[2]?></h1></td>
-                      <td>
-                        <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
-                          <input type="hidden" id="Plus" name="Plus" value = "2">
-                          <button  type="submit" class="btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                        </form>
-                      </td>
-                      <td>
-                        <form action=<?php echo '../controller/carrito.php?id='.$mensajes->fields[3].' ' ?> method="post">
-                          <input type="hidden" id="txtCantidad" name="txtCantidad" value = "0">
-                          <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true">Eliminar</i></button>
-                        </form>
-                      </td>
-                      <td><h1><?php echo $mensajes->fields[4]?></h1></td>
-                      
-                  </tr>
-                  <?php
-                  $mensajes->moveNext();
-                  }
-                  ?>
-              </tbody>
-          </table>
-          <h1>Subtotal : <?php echo $mensajes3 ->fields[0] ?></h1>
-          <div class="container-carrito">
-            <form action=<?php echo '../controller/carrito.php' ?> method="post">
-              <input type="hidden" id="Compra" name="Compra" value = "0">
-              <button  type="submit" class="btn " onclick="mostrarAlerta()"><i class="fa fa-shopping-basket" aria-hidden="true">Comprar</i></button>
-            </form>
+          <div id = "divCarrito">
+
           </div>
       </div>
   </main>
@@ -161,16 +86,33 @@
 </html>
 <script>
 $(document).ready(function(){
+    h();
+    carrito();
+  })
+  function carrito(){
     $.ajax({
       type: "POST",
-      url: "../controller/ctrHeader.php?pag=3",
-      data: { pag: '3' },
+      url: "../controller/ctrAllCarrito.php",
+      data: {},
       success: function(data) {
-        $('#head').html(data); // Corregido aquí
+        $('#divCarrito').html(data);
       },
       error: function(error) {
         console.error('Error al cargar el encabezado', error);
       }
     })
-  });
+  }
+  function h(){
+    $.ajax({
+      type: "POST",
+      url: "../controller/ctrHeader.php?pag=3",
+      data: { pag: '3' },
+      success: function(data) {
+        $('#head').html(data);
+      },
+      error: function(error) {
+        console.error('Error al cargar el encabezado', error);
+      }
+    })
+  }
 </script>

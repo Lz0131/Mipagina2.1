@@ -40,6 +40,9 @@
           }
         });
       }
+      function irLibro(){
+
+      }
     </script>
 </head>
 <!--Cuerpo-->
@@ -51,6 +54,7 @@
     <main>
         <div class="favoritos container">
             <h1>Favoritos</h1>
+            
             <table class="table">
                 <thead>
                     <tr>
@@ -62,38 +66,8 @@
                     </tr>
                 </thead>
                 <form id="frmFavorito" method="post">
-                <tbody>
-                    <?php
-                        while(!$mensajes->EOF){
-                    ?>
-                    <tr>
-                        <th id="txtidf" name="txtidf" scope="row"><?php $mensajes->fields[2] ?></th>
-                        <td>
-                            <?php
-                                if (isset($mensajes->fields[0])) {
-                                    $url_imagen = htmlspecialchars($mensajes->fields[0], ENT_QUOTES, 'UTF-8');
-                                    echo '<div class="centrar-imagen">';
-                                    echo '<img src="' . $url_imagen . '" alt="' . $url_imagen . '" width="300" height="450"">';
-                                    echo '</div>';
-                                } else {
-                                    echo 'La URL de la imagen no está disponible.';
-                                }
-                            ?>
-                        </td>
-                        <td><h1><?php echo $mensajes->fields[1]?></h1></td>
-                        <td> 
-                          <form action="<?php echo '../controller/ctrfavorito.php?id='.$mensajes->fields[3].' ' ?>" method="post">
-                            <button  type="submit" class="btn" style='font-size:24px'><i class="fa fa-times-circle" aria-hidden="true"></i></button>
-                          </form>
-                        </td>
-                        <td><button  type="submit" onclick= "" class="btn" style='font-size:24px'><i class="fa fa-book" aria-hidden="true"></i></button></td>
-                    </tr>
-                    <?php
-                        $mensajes->moveNext();
-                    }
-                    ?>
-                </tbody>
-              </form>
+                  <tbody id = "divFav"></tbody>
+                </form>
             </table>
         </div>
     </main>
@@ -150,6 +124,11 @@
 
 <script>
 $(document).ready(function(){
+    h();
+    fav();
+  })
+
+  function h() {
     $.ajax({
       type: "POST",
       url: "../controller/ctrHeader.php?pag=2",
@@ -161,5 +140,20 @@ $(document).ready(function(){
         console.error('Error al cargar el encabezado', error);
       }
     })
-  });
+  }
+
+  function fav(){
+    $.ajax({
+      type: "POST",
+      url: "../controller/ctrAllFavoritos.php",
+      data: {},
+      success: function(data) {
+        $('#divFav').html(data); // Corregido aquí
+      },
+      error: function(error) {
+        console.error('Error al cargar el encabezado', error);
+      }
+    })
+  }
+
 </script>

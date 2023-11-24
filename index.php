@@ -90,7 +90,7 @@
                                   Lector Omnisciente</h4>
                               <p>¿Qué arias si la novela que estas leyendo se vuelve realidad?<br>
                                   ¿Comó sobrevirias en un mundo en ruinas?</p>
-                              <a href="./views/infoLib.php?opc=1">Ver información</a>
+                              <a href="./views/infoLib.php?id_libro=1">Ver información</a>
                           </div>
                           <div class="col-md-5 col-12 order-md-2 order-1"><img width="300" height="450" src="./assets/img/portadalo.jpg"
                                   class="mx-auto" alt="slide"></div>
@@ -107,7 +107,7 @@
                                   La basura de la familia del conde</h4>
                               <p>¿Qué harias si despertaras como un personaje basura? <br>
                                   ¿Como sobrevivirias sin involucrarte?</p>
-                                  <a href="./views/infoLib.php?opc=2">Ver información</a>
+                                  <a href="./views/infoLib.php?id_libro=2">Ver información</a>
                           </div>
                           <div class="col-md-5 col-12 order-md-2 order-1"><img width="300" height="450" src="./assets/img/portadatcf.webp"
                                   class="mx-auto" alt="slide"></div>
@@ -125,7 +125,7 @@
                               <p>¿Que harias si despertaras y ves que tu hogar que una vez existio ahora no existe?
                                   <br>
                                   Todo por lo que luchaste, no valio la pena y es tu responsabilidad</p>
-                                  <a href="./views/infoLib.php?opc=3">Ver información</a>
+                                  <a href="./views/infoLib.php?id_libro=3">Ver información</a>
                           </div>
                           <div class="col-md-5 col-12 order-md-2 order-1"><img width="300" height="450" src="./assets/img/portadarh.jpg"
                                   class="mx-auto" alt="slide"></div>
