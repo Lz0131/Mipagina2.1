@@ -43,23 +43,24 @@
             FROM libro l
             JOIN info_autor ia ON l.id_info_autor = ia.id_info_autor
             JOIN usuario u ON ia.id_usuario = u.id_usuario
-            WHERE l.id_libro = $id_libro;
+            WHERE l.id_libro = :id_libro;
             ";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':id_libro', $id_libro);
             $stmt->execute();
-            return $stmt;
+            $existe = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $existe;
         }    
         public function getAllinfo_Autor($id_libro){
             $query = "SELECT ia.info_autor
             FROM info_autor ia
             JOIN libro l ON ia.id_info_autor = l.id_info_autor
-            WHERE l.id_libro = $id_libro;
+            WHERE l.id_libro = :id_libro;
             ";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':id_libro', $id_libro);
             $stmt->execute();
-            $existe = $stmt->fetchColumn();
+            $existe = $stmt->fetch(PDO::FETCH_ASSOC);
             return $existe;
         }  
         public function UpdateCarrito($id_usuario, $id_libro, $cantidad){
@@ -79,7 +80,7 @@
         }
         public function InsertCarrito($id_usuario, $id_libro, $cantidad){
             $query = "INSERT INTO carrito(id_usuario, id_libro, cantidad)
-            VALUES (:id_usuario, :id_rol)";
+            VALUES (:id_usuario, :id_libro, :cantidad)";
             $rs = $this->db->prepare($query);
             $rs->bindParam(":id_usuario", $id_usuario);
             $rs->bindParam(":id_libro", $id_libro);

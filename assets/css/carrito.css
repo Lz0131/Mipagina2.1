@@ -207,24 +207,13 @@ button {
 }
 
 /*Footer*/
-footer {
-  margin-top: auto;
-}
-
-.footer-classic {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: black; /* Añade un fondo negro para que sea visible en cualquier fondo */
-  padding: 20px; /* Añade algún relleno para que el contenido sea visible y no esté pegado al borde */
-}
-
 .context-dark, .bg-gray-dark, .bg-primary {
   color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-classic a, .footer-classic a:focus, .footer-classic a:active {
   color: #ffffff;
+ 
 }
 .nav-list li {
   padding-top: 5px;

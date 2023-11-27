@@ -10,7 +10,41 @@
             $con = new Conexion();
             $this->db = $con->conectar();
         }
-    
+        
+        public function Crearventa($id_usuario, $id_metodo_pago, $fecha ){
+            $query = "INSERT INTO venta(id_usuario, id_metodo_pago, fecha) VALUES (:id_usuario, :id_metodo_pago, :fecha)";
+            $rs = $this->db->prepare($query);
+            $rs->bindParam(":id_usuario", $id_usuario);
+            $rs->bindParam(":id_metodo_pago", $id_metodo_pago);
+            $rs->bindParam(":fecha", $fecha);
+            $rs->execute();
+            $id_venta = $this->db->lastInsertId();
+            return $id_venta;
+        }
+
+        public function getCarrito($id_usuario){
+            $query = "SELECT c.id_libro as id_libro, t.precio as precio, c.cantidad as cantidad, (c.cantidad * t.precio ) as sub_total
+            FROM carrito c
+            INNER JOIN libro l ON l.id_libro = c.id_libro 
+            INNER JOIN tipo_libro t ON t.id_libro = l.id_libro 
+            WHERE c.id_usuario = :id_usuario AND t.id_tipo = 1";
+            $rs = $this->db->prepare($query);
+            $rs -> bindParam(':id_usuario', $id_usuario);
+            $rs->execute();
+            return $rs;
+        }
+
+        public function CrearVenta_detalle($id_venta, $id_libro, $cantidad, $precio, $sub_total){
+            $query = "INSERT INTO venta_detalle(id_venta, id_libro, cantidad, precio, sub_total)
+            VALUES (:id_venta, :id_libro, :cantidad,:precio, :sub_total)";
+            $rs = $this->db->prepare($query);
+            $rs->bindParam(":id_venta", $id_venta);
+            $rs->bindParam(":id_libro", $id_libro);
+            $rs->bindParam(":cantidad", $cantidad);
+            $rs->bindParam(":precio", $precio);
+            $rs->bindParam(":sub_total", $sub_total);
+            $rs->execute();
+        }
 
         public function getAllCarrito($id_usuario){
             $query = "SELECT 
@@ -45,11 +79,11 @@
         }
 
         public function getAllCarritonum($id_usuario){
-            $query = "SELECT COUNT(*) FROM carrito WHERE id_usuario= :id_usuario";
+            $query = "SELECT COUNT(*) AS num FROM carrito WHERE id_usuario= :id_usuario";
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
             $stmt->execute();
-            $existe = $stmt->fetchColumn();
+            $existe = $stmt->fetch(PDO::FETCH_ASSOC);
             return $existe;
         }
         public function getAllTotalFavoritosnum($id_libro){
@@ -60,31 +94,53 @@
             $existe = $stmt->fetchColumn();
             return $existe;
         }
-        public function DeleteCarrito($id_usuario){
+
+        public function getCorreo($id_usuario){
+            $query = "SELECT email FROM usuario WHERE id_usuario = :id_usuario";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+            $stmt->execute();
+            $existe = $stmt->fetchColumn();
+            return $existe;
+        }
+
+        public function DeleteAllCarrito($id_usuario){
             $table = 'carrito';
             $query = 'DELETE FROM carrito WHERE id_usuario =:id_usuario';
-            $this->db->Execute($query);
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+            $stmt->execute();
+            //echo 'correcto';
+            //return $stmt;
         }
-        public function InsertFavorito($id_usuario, $id_libro){
-            $table = 'favorito';
-            $record = array();
-            $record['id_usuario'] = $id_usuario;
-            $record['id_libro'] = $id_libro;
-            $this->db->autoExecute($table,$record,'INSERT');
-        }
-
-        public function Updateplus($id_libro){
-            $query = 'UPDATE carrito
-            SET cantidad = cantidad + 1
-            WHERE id_usuario = 1 AND id_libro ='. $id_libro;
-            $this->db->Execute($query);
+        public function DeleteProducCarrito($id_usuario){
+            $table = 'carrito';
+            $query = 'DELETE FROM carrito WHERE id_usuario =:id_usuario';
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+            $stmt->execute();
         }
 
-        public function Updateminus($id_libro){
+        public function Updateplus($id_usuario, $id_libro){
             $query = 'UPDATE carrito
-            SET cantidad = cantidad - 1
-            WHERE id_usuario = 1 AND cantidad >=2 AND id_libro ='. $id_libro;
-            $this->db->Execute($query);
+                      SET cantidad = cantidad + 1
+                      WHERE id_usuario = :id_usuario AND id_libro = :id_libro';
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+            $stmt->bindParam(':id_libro', $id_libro, PDO::PARAM_STR);
+            $stmt->execute();
         }
+        
+
+        public function Updateminus($id_usuario, $id_libro){
+            $query = 'UPDATE carrito
+                      SET cantidad = cantidad - 1
+                      WHERE id_usuario = :id_usuario AND cantidad >= 2 AND id_libro = :id_libro';
+            $stmt = $this->db->prepare($query);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+            $stmt->bindParam(':id_libro', $id_libro, PDO::PARAM_STR);
+            $stmt->execute();
+        }
+        
     }
 ?>

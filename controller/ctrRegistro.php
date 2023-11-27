@@ -24,16 +24,40 @@ if ($recaptchaData->success) {
             $apellido_p = $_POST['apellido_p'];
             $apellido_m = $_POST['apellido_m'];
             $contrasena = $_POST['contrasena'];
-            $msj_registro -> crearUsuarioYRol($nombre, $apellido_p, $apellido_m, $email, $contrasena);
-            $id_usuario = $msj_registro -> trerCorreo($email);
-            $_SESSION['id_usuario'] = $id_usuario;
-            $response = array(
+            $id_ciudad = $_POST['id_ciudad'];
+            $calle = $_POST['calle'];
+            $num_casa = $_POST['num_casa'];
+            $caracteristicas = $_POST['caracteristicas'];
+            $latitud = $_POST['latitud'];
+            $longitud = $_POST['longitud'];
+            $l1 = array(
                 'success' => true,
-                'message' => 'Registro exitoso'
+                'message' => 'la latitud es de '.$latitud
             );
+            $l2 = array(
+                'success' => true,
+                'message' => 'la longitud es de '.$longitud
+            );
+            if (empty($nombre) || empty($apellido_p) || empty($apellido_m) || empty($contrasena) || empty($id_ciudad) || empty($calle) || empty($num_casa) || empty($caracteristicas) || empty($latitud) || empty($longitud)) {
+                $response = array(
+                    'success' => true,
+                    'message' => 'Todos los campos son obligatorios. Por favor, complete todos los campos.'
+                );
+                echo "Todos los campos son obligatorios. Por favor, complete todos los campos.";
+            } else {
+                $msj_registro -> crearUsuarioYRol($nombre, $apellido_p, $apellido_m, $email, $contrasena, $calle, $num_casa, $caracteristicas, $id_ciudad, $latitud, $longitud);
+                $id_usuario = $msj_registro -> trerCorreo($email);
+                $_SESSION['id_usuario'] = $id_usuario;
+                $response = array(
+                    'success' => true,
+                    'message' => 'Registro exitoso'
+                );
+            }
             // Envía la respuesta como JSON
             header('Content-Type: application/json');
             echo json_encode($response);
+            echo json_encode($l1);
+            echo json_encode($l2);
             // header("Location: Admin/ctrlAdmin.php");
         }else{
             $response = array(
@@ -57,7 +81,7 @@ if ($recaptchaData->success) {
     // Puedes enviar una respuesta JSON con un mensaje de error si lo deseas
     $response = array(
         'success' => false,
-        'message' => 'complete el captcha porFavor'
+        'message' => 'Necesita completar el captcha porfavor'
     );
     header('Content-Type: application/json');
     echo json_encode($response);

@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
     <script src="../assets/js/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/login.css"> <!--Direccion al css-->
+    <link rel="stylesheet" href="../assets/css/signup.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
 <!--Fontawesome CDN-->
@@ -24,9 +24,13 @@
         var ape_materno = document.getElementById("apellido_m").value;
         var correo = document.getElementById("email").value;
         var password = document.getElementById("contrasena").value;
-
+        var numero_casa = document.getElementById("numero_casa").value;
+        var caracteristicas = document.getElementById("caracteristicas").value;
+        var latitud = document.getElementById("latitud").value;
+        var longitud = document.getElementById("longitud").value;
+        alert(longitud);
         // Verificar que todos los campos estén llenos
-        if (nombre === "" || ape_paterno === "" || ape_materno === "" || correo === "" || password === "") {
+        if (nombre === "" || ape_paterno === "" || ape_materno === "" || correo === "" || password === "" || calle === "" || numero_casa === "" || caracteristicas === "" || latitud === "" || longitud === "") {
             alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
             return false; // Evita que se llame a la función insertar()
         }
@@ -87,6 +91,51 @@
                             </div>
                             <input type="text" id="apellido_m" name="apellido_m" class="form-control" placeholder="Apellido materno">
                         </div>
+                        <div class= "form-group">
+                          <div class="input-group form-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                              </div>
+                              <select class="form-control" name="id_ciudad" id="id_ciudad">
+                                <option value="1">Leon</option>
+                                <option value="2">Guanajuato</option>
+                                <option value="3">Irapuato</option>
+                                <option value="4">Celaya</option>
+                                
+                              </select>
+                          </div>
+                        </div>
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                          </div>
+                          <input type="text" id="calle" name="calle" class="form-control" placeholder="Calle">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-home"></i></span>
+                            </div>
+                            <input type="text" id="num_casa" name="num_casa" class="form-control" placeholder="Número de casa">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+                            </div>
+                            <input type="text" id="caracteristicas" name="caracteristicas" class="form-control" placeholder="Características">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                            </div>
+                            <input type="number" id="latitud" name="latitud" class="form-control" placeholder="Latitud" step="any">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                            </div>
+                            <input type="number" id="longitud" name="longitud" class="form-control" placeholder="Longitud" step="any">
+                        </div>
+                        
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>

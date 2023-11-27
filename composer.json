@@ -1,6 +1,19 @@
 {
+    "name": "gamez/mipagina2.0",
+    "description": "para mis pdfs",
     "require": {
-        "phpmailer/phpmailer": "^6.8",
-        "dompdf/dompdf": "^2.0"
-    }
+        "dompdf/dompdf": "^2.0",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gamez\\Mipagina20\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lz0131",
+            "email": "gamez.dulce.1dm@gmail.com"
+        }
+    ]
 }

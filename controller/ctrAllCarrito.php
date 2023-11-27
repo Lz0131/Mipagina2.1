@@ -22,6 +22,7 @@ $r = '
                   </tr>
               </thead>
               <tbody>
+
 ';
 $carrito = $msjCarrito->getAllCarrito($id_usuario);
 foreach ($carrito as $c){
@@ -53,20 +54,13 @@ foreach ($carrito as $c){
                     </form>
                 </td>
                 <td><h1>'.$c['subtotal'].'</h1></td>
-            </tr>
-        </tbody>
-    </table>';
+            </tr>';
 }  
 $subtotal = $msjCarrito->getSubTotal($id_usuario);
 
 $r.='
+</tbody>
 <h1>Subtotal :'.$subtotal.'</h1>
-    <div class="container-carrito">
-        <form action=../controller/carrito.php method="post">
-            <input type="hidden" id="Compra" name="Compra" value = "0">
-            <button  type="submit" class="btn " onclick="mostrarAlerta()"><i class="fa fa-shopping-basket" aria-hidden="true">Comprar</i></button>
-        </form>
-    </div>
 ';      
 echo $r; 
 ?>

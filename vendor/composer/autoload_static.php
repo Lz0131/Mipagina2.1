@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
+class ComposerStaticInitd907c15b8c9ad34e20fa6845f3371537
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -19,6 +19,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         'M' => 
         array (
             'Masterminds\\' => 12,
+        ),
+        'G' => 
+        array (
+            'Gamez\\Mipagina20\\' => 17,
         ),
         'F' => 
         array (
@@ -47,6 +51,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
+        'Gamez\\Mipagina20\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
@@ -65,9 +73,9 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitac2d307f4ed514763a8119f3523066bb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitac2d307f4ed514763a8119f3523066bb::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitac2d307f4ed514763a8119f3523066bb::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd907c15b8c9ad34e20fa6845f3371537::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd907c15b8c9ad34e20fa6845f3371537::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd907c15b8c9ad34e20fa6845f3371537::$classMap;
 
         }, null, ClassLoader::class);
     }

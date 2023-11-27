@@ -9,9 +9,10 @@ $msjLibro = new MensajesModel();
 $libro = $msjLibro->getAllMensajes($id_libro);
 $autor = $msjLibro->getAllAutor($id_libro);
 $info_autor = $msjLibro->getAllinfo_Autor($id_libro);
+foreach($libro as $l){
 $portada = "";
-if (isset($libro['portada'])) {
-    $url_imagen = htmlspecialchars($libro['portada'], ENT_QUOTES, 'UTF-8');
+if (isset($l['portada'])) {
+    $url_imagen = htmlspecialchars($l['portada'], ENT_QUOTES, 'UTF-8');
     $portada.= '<div class="centrar-imagen">';
     $portada.= '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450">';
     $portada.= '</div>';
@@ -19,24 +20,17 @@ if (isset($libro['portada'])) {
     $portada.= 'La URL de la imagen no está disponible.';
 }
 $r = '
-<h1 id="txtTitulo" name="txtTitulo">'.$msjLibro->getAllMensajes['nombre'].'</h1>
+<h1 id="txtTitulo" name="txtTitulo">'.$l['nombre'].'</h1>
 '.$portada.'
 <div class="container-favorito" style="text-align: center;">
-    <form action=../controller/ctrfavorito.php?id_libro='.$libro['id_libro'].' method="post">
+    <form action=../controller/ctrfavorito.php?id_libro='.$l['id_libro'].' method="post">
         <button  type="submit" class="btn"><i class="fa fa-heart" aria-hidden="true" style="color: black;">Favorito</i></button>
     </form>
 </div>
 <div class="container-carrito">
-    <form action=../controller/carrito.php?id_libro='.$libro['id_libro'].' method="post">
+    <form action=../controller/carrito.php?id_libro='.$l['id_libro'].' method="post">
         <label for="txtCantidad">Cantidad</label>
-        <input type="number" id="txtCantidad" name="txtCantidad" />
-        <button  type="submit" class="btn"><i class="fa fa-cart-plus" aria-hidden="true">Carrito</i></button>
-    </form>
-</div>
-<div class="container-carrito">
-    <form action=../controller/carrito.php?id_libro='.$libro['id_libro']. ' method="post">
-        <label for="txtCantidad">Cantidad</label>
-        <input type="number" id="txtCantidad" name="txtCantidad" />
+        <input type="number" id="cantidad" name="cantidad" />
         <button  type="submit" class="btn"><i class="fa fa-cart-plus" aria-hidden="true">Carrito</i></button>
     </form>
 </div>
@@ -57,7 +51,7 @@ $r = '
                     <div class="panel-body">
                         <!-- Tab content goes here -->
                         <br>
-                        Titulo:'.$libro['nombre'].'  <br>
+                        Titulo:'.$l['nombre'].'  <br>
                         Autor:'.$autor['nombre'].' '.$autor['apellido_p'].' '.$autor['apellido_m'].' <br>
                         Informacion del autor:'.$info_autor['info_autor'].' <br>
                         Idioma Original: Koreano <br>
@@ -79,11 +73,13 @@ $r = '
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
                     aria-labelledby="headingOne">
                     <div class="panel-body">
-                        '.$libro['resena'].'
+                        '.$l['resena'].'
                     </div>
                 </div>
             </div>
         </div>
 ';
 echo $r;
+}
+
 ?>
