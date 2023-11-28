@@ -83,7 +83,7 @@
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
             $stmt->execute();
-            $existe = $stmt->fetch(PDO::FETCH_ASSOC);
+            $existe = $stmt->fetchColumn();
             return $existe;
         }
         public function getAllTotalFavoritosnum($id_libro){

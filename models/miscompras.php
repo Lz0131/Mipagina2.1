@@ -23,7 +23,7 @@ class MensajesModelMis_Compras{
         $rs -> bindParam(':id_usuario', $id_usuario);
         $rs->execute();
         $rs;
-        $res = $rs -> fetchAll(PDO::FETCH_ASSOC);
+        $res = $rs -> fetchAll();
         return $res;
     }
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 require_once '../models/carrito.php';
 require_once '../models/conexion.php';
 require_once '../models/envCorreoCompra.php';
@@ -10,7 +10,8 @@ $id_usuario = $_SESSION['id_usuario'];
 
 if (isset($_GET['Compra'])) {
     $numCarrito = $msjCarrito->getAllCarritonum($id_usuario);
-    if($numCarrito['num'] == 0){
+    //echo 'num carrito'. $numCarrito;
+    if($numCarrito == 0){
         $response = array(
             'success' => false,
             'message' => 'No hay libros en el carrito. Agrega libros antes de comprar.'
@@ -19,11 +20,14 @@ if (isset($_GET['Compra'])) {
         exit;
     }else{
         $fecha = date('Y-m-d H:i:s');
+        //echo 'fecha'.$fecha;
         $mensaje = "asdsa";
         //echo "<script>console.log('$mensaje');</script>";
         $id_metodo_pago = 1;
         $id_venta = $msjCarrito -> Crearventa($id_usuario, $id_metodo_pago, $fecha);
+        //echo 'id_venta '.$id_venta;
         $carrito = $msjCarrito -> getCarrito($id_usuario);
+        //echo 'carrito'.$carrito;
         foreach($carrito as $c){
             $id_libro = $c['id_libro'];
             $precio = $c['precio'];
@@ -36,11 +40,11 @@ if (isset($_GET['Compra'])) {
         $ticket = ticket($id_venta, $id_usuario);
 
         $email = $msjCarrito->getCorreo($id_usuario);
-        
+        echo $email;
         $correo = new MailerService();
         
-        $correo->sendMailTicket($correo, $ticket);
-        
+        $correo->sendMailTicket($email, $ticket);
+        //echo 'es el correo xd ';
         //echo json_encode($response);
         $response = array(
             'success' => true,

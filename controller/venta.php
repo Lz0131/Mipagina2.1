@@ -5,9 +5,10 @@ require_once '../models/conexion.php';
 
 $msjVenta = new MensajesModelVentas();
 $id_usuario = $_SESSION['id_usuario'];
-
+echo $id_usuario;
 $r = '<h2>Resumen de Compra</h2>';
 $id_venta = $msjVenta->traerId_Venta($id_usuario);
+echo $id_venta;
 $cantidad_producto = $msjVenta->getCantidadProducto ($id_venta);
 $r.= '
 <p>Cantidad de productos: <span>'.$cantidad_producto.'</span></p>';

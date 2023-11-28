@@ -5,16 +5,24 @@ require_once '../models/conexion.php';
 
 $msjMisCompras = new MensajesModelMis_Compras();
 $id_usuario = $_SESSION['id_usuario'];
+//echo 'no es el id';
 $r = '';
 $Mis_Compras = $msjMisCompras->getInfoMis_Compras($id_usuario);
+//echo 'no es el objeto mis compras';
 
 foreach($Mis_Compras as $mc){
     $id_venta = $mc['id_venta'];
+    //echo 'id venta: '.$id_venta;
     $cantidad_producto = $msjMisCompras->getCantidadProducto ($id_venta);
+    //echo ' cantidad producto: '.$cantidad_producto;
     $sub_total = $msjMisCompras->getSubTotal($id_venta);
+    //echo ' sub total'.$sub_total;
     $costo_envio = 99.90;
+    //echo ' costo envio'.$costo_envio;
     $total = $msjMisCompras->getTotal($id_venta, $costo_envio);
+    //echo ' total '.$total;
     $info_fecha = $msjMisCompras-> getFecha($id_venta);
+    //echo ' fecha:'.$info_fecha;
     $r.= '
     <div id = "resumen_compra">
         <h2>Resumen de Compra</h2>

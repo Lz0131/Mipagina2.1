@@ -14,13 +14,22 @@ class MensajesModelVentas{
         $con = new Conexion();
         $this->db = $con->conectar();
     }
+    
+    public function getAllCarritonum($id_usuario){
+        $query = "SELECT COUNT(*) AS num FROM carrito WHERE id_usuario= :id_usuario";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+        $stmt->execute();
+        $existe = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $existe;
+    }
 
     public function traerId_Venta($id_usuario){
         $query = "SELECT MAX(id_venta) as id_venta 
         FROM venta 
         WHERE id_usuario = :id_usuario";
         $rs = $this->db->prepare($query);
-        $rs->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+        $rs->bindParam(':id_usuario', $id_usuario);
         $rs->execute();
         $id_venta = $rs->fetchColumn();
         return $id_venta;

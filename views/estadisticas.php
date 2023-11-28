@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inicio</title>
+        <title>Libros mas vendidos</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
@@ -12,15 +12,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <body>
         <!--Header-->
-        
         <header id="head"></header>
         <!--Contenido-->
-        <div id="ver"></div>
-        <div id = "resumen_compra"></div>
+        <div id = "Grafica"></div>
         <!--Pie de Pagina-->
         <footer class="section footer-classic context-dark bg-image" style="background:black;">
         <div class="containe">
@@ -78,27 +76,25 @@
 <script>
     $(document).ready(function(){
       h();
-      carrito();
-      venta();
     })
-    function carrito(){
-    $.ajax({
-      type: "POST",
-      url: "../controller/ctrventa.php?Compra=0",
-      data: {},
-      success: function(data) {
-        $('#ver').html(data);
-        console.log(response);
-        //if (response.success) {
-            // Operaciones después de una compra exitosa
-            alert("Compra exitosa. Gracias por tu compra.");
-        //}
-      },
-      error: function(error) {
-        console.error('Error al intentar la compra.', error);
-      }
-    })
-  }
+    function optenerDatos(){
+        $.ajax({
+            url: '../controller/ctrGrafica.php',
+            type: 'POST',
+            data: {},
+            dataType: 'json',
+            success: function(data){
+                dibujargraficas(data);
+            },
+            error: function (error){
+                console.error('Error al procesar la peticion AJAX', error);
+            }
+        });
+    }
+
+    function dibujargraficas(){
+        
+    }
 
 
     function h(){
@@ -111,20 +107,6 @@
       },
       error: function(error) {
         console.error('Error al cargar el encabezado', error);
-      }
-    })
-  }
-
-  function venta(){
-    $.ajax({
-      type: "POST",
-      url: "../controller/venta.php",
-      data: {},
-      success: function(data) {
-        $('#resumen_compra').html(data);
-      },
-      error: function(error) {
-        console.error('Error al cargar la compra', error);
       }
     })
   }

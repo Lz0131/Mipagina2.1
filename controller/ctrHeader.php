@@ -4,7 +4,6 @@
     require_once '../models/conexion.php';
     require_once '../models/usuario.php';
     require_once '../models/favorito.php';
-    include_once '../assets/adodb5/adodb.inc.php';
     //echo '0';
     $msjRol = new models_usuario();
     $msjFav = new MensajesModel();
@@ -13,7 +12,10 @@
     if(isset($_SESSION['id_usuario'])){
         //echo '2';
         $id_usuario = $_SESSION['id_usuario'];
+        echo $id_usuario;
         $numFav = $msjFav->getAllTotalFavoritosnum($id_usuario);
+        echo $numFav;
+        echo $_GET['pag'];
         //echo 'num fav '.$numFav;
         //echo 'id usuario'.$id_usuario;
         //echo 'rol '. $msjRol->getRol($id_usuario);
@@ -122,7 +124,7 @@
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
                         $dirAddLibro = './views/addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
                         break;
                     case 1: //Pagina Index.php
                         $logo = './assets/img/logo1.png';
@@ -134,7 +136,7 @@
                         $dirPerfil = './views/perfil.php';
                         $dirCerrarsession = './controller/logout.php';
                         $dirAddLibro = './views/addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro , $numFav);
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro , $numFav);
                         break;
                     case 2: //Pagina Favoritos
                         $logo = '../assets/img/logo1.png';

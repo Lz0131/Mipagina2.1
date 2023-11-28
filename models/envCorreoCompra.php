@@ -50,11 +50,11 @@ class MailerService{
             $mail->SMTPAuth   = true;
             $mail->Port       = 587;
             $mail->Username   = 'milibfav@gmail.com';
-            $mail->Password   = 'qW2Q8C7Sgj5cW9J'; 
+            $mail->Password   = 'hkzw tcyi htct ghpv'; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
             $mail->setFrom('milibfav@gmail.com', 'milibfav');
-            $mail->addAddress($para, $nombre);
+            $mail->addAddress($para);
             $mail->isHTML(true);
             $mail->Subject = 'TICKET';
             $mail->Body = $mensaje;
