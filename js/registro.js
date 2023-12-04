@@ -35,33 +35,43 @@ jQuery(document).on('submit', '#frmRegistro', function (event) {
         return false; // Evita que se llame a la función insertar()
     }else{
         // Continúa con el envío del formulario si el captcha se completó
-    jQuery.ajax({
-        url: '../controller/ctrRegistro.php',
-        type: 'POST',
-        dataType: 'json',
-        data: jQuery(this).serialize(),
-        beforeSend: function () {
-            // jQuery('.botonlg').val('Validando...');
+        if(esCorreoElectronicoValido(correo)){
+                jQuery.ajax({
+                url: '../controller/ctrRegistro.php',
+                type: 'POST',
+                dataType: 'json',
+                data: jQuery(this).serialize(),
+                beforeSend: function () {
+                    // jQuery('.botonlg').val('Validando...');
+                }
+            })
+                .done(function (respuesta) {
+                    if (respuesta.success) {
+                        alert("Registro exitoso");
+                        window.location.href = '../index.php'
+
+                    } else {
+                        alert('correo duplicado');
+                    }
+                })
+
+                .fail(function (resp) {
+                    alert(resp.responseText);
+                    console.log(resp.responseText);
+                })
+                .always(function () {
+                    console.log('Complete');
+
+                });
+        }else{
+            alert("El correo electronico no es valido.")
+            return false;
         }
-    })
-        .done(function (respuesta) {
-            if (respuesta.success) {
-                alert("Registro exitoso");
-                window.location.href = '../index.php'
+    }
 
-            } else {
-                alert('correo duplicado');
-            }
-        })
-
-        .fail(function (resp) {
-            alert(resp.responseText);
-            console.log(resp.responseText);
-        })
-        .always(function () {
-            console.log('Complete');
-
-        });
+    function esCorreoElectronicoValido(correo){
+        var expresionRegularCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return expresionRegularCorreo.test(correo);
     }
     
 });

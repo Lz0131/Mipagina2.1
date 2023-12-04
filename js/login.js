@@ -1,4 +1,5 @@
 jQuery(document).on('submit', '#frmInicioSesion', function (event) {
+    
     event.preventDefault(); 
     jQuery.ajax({
         url: '../controller/ctrInicioSesion.php',
@@ -18,8 +19,9 @@ jQuery(document).on('submit', '#frmInicioSesion', function (event) {
             alert(respuesta.message)
         }
     })
-    .fail(function (resp) {
-        alert(resp.responseText);
-        console.log(resp.responseText);
+    .fail(function (respuesta) {
+        alert(respuesta.responseText);
+        console.log(respuesta.responseText);
     })
+
 });

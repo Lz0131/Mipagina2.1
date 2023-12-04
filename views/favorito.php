@@ -128,6 +128,7 @@
 
 <script>
 $(document).ready(function(){
+    verificar();
     h();
     fav();
   })
@@ -143,6 +144,27 @@ $(document).ready(function(){
       error: function(error) {
         console.error('Error al cargar el encabezado', error);
       }
+    })
+  }
+
+  function verificar(){
+    jQuery.ajax({
+        url: '../controller/ctrRol.php',
+        type: 'POST',
+        dataType: 'json',
+        data: jQuery(this).serialize(),
+        beforeSend: function () {
+            // Puedes realizar acciones antes de enviar la solicitud aquí
+            //jQuery('.botonlg').val('validando...'); // Debes usar jQuery en lugar de $
+        }
+    })
+    .done(function (respuesta) {
+        if (respuesta.success) {
+            //alert(respuesta.message)
+        }else{
+            alert(respuesta.message)
+            window.location.href = "../index.php";
+        }
     })
   }
 

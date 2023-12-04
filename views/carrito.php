@@ -88,10 +88,33 @@
   var total;
   var id;
 $(document).ready(function(){
+    verificar();
     h();
     carrito();
     
   })
+
+  function verificar(){
+    jQuery.ajax({
+        url: '../controller/ctrRol.php',
+        type: 'POST',
+        dataType: 'json',
+        data: jQuery(this).serialize(),
+        beforeSend: function () {
+            // Puedes realizar acciones antes de enviar la solicitud aquí
+            //jQuery('.botonlg').val('validando...'); // Debes usar jQuery en lugar de $
+        }
+    })
+    .done(function (respuesta) {
+        if (respuesta.success) {
+            //alert(respuesta.message)
+        }else{
+            alert(respuesta.message)
+            window.location.href = "../index.php";
+        }
+    })
+  }
+
   function carrito(){
     $.ajax({
       type: "POST",

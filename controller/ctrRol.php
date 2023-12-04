@@ -25,8 +25,27 @@
                     }
                 break;
                 case 2: //Agregar libros
-
+                    if($msjRol->getRol($id_usuario) == 2){
+                        $response = array(
+                            'success' => true,
+                            'message' => 'Es Escritor'
+                        );
+                        echo json_encode($response);
+                    }else{
+                        $response = array(
+                            'success' => false,
+                            'message' => 'No puedes entrar aqui'
+                        );
+                        echo json_encode($response);
+                    }
+                break;
             }
+        }else{
+            $response = array(
+                'success' => true,
+                'message' => 'Permitido'
+            );
+            echo json_encode($response);
         }
         
     }else{

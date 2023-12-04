@@ -6,7 +6,7 @@ include_once '../assets/adodb5/adodb.inc.php';
 
 $msjModel = new MensajesModel();
 //$id_usuario = '1';  // Supongamos que el ID del usuario es 1
-
+if(isset($_SESSION['id_usuario'])){
     $id_usuario = $_SESSION['id_usuario'];
     $id_libro = $_GET['id_libro'];
     $result = $msjModel->getAllFavoritosnum($id_usuario, $id_libro);
@@ -17,4 +17,10 @@ $msjModel = new MensajesModel();
         $msjModel->InsertFavorito($id_usuario, $id_libro);
         header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
+}else{
+    echo 'no tiene sesion iniciada';
+    echo header("Location: ../views/login.php");
+    exit();
+}
+    
 ?>

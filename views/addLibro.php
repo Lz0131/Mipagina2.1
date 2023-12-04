@@ -113,6 +113,7 @@
 </html>
 <script>
   $( document ).ready(function() {
+    verificar();
     h();
     AddLibro();
     VerLibros();
@@ -142,6 +143,28 @@
         }
       })
   }
+
+  function verificar(){
+    jQuery.ajax({
+        url: '../controller/ctrRol.php?opc=1',
+        type: 'POST',
+        dataType: 'json',
+        data: jQuery(this).serialize(),
+        beforeSend: function () {
+            // Puedes realizar acciones antes de enviar la solicitud aquí
+            //jQuery('.botonlg').val('validando...'); // Debes usar jQuery en lugar de $
+        }
+    })
+    .done(function (respuesta) {
+        if (respuesta.success) {
+            //alert(respuesta.message)
+        }else{
+            alert(respuesta.message)
+            window.location.href = "../index.php";
+        }
+    })
+  }
+
   function AddLibro() {
     $.ajax({
         type: "POST", 
