@@ -11,10 +11,13 @@
             $this->db = $con->conectar();
         }
 
-        public function getNomEditorial(){
-            $query = "SELECT editorial.editorial, editorial.id_editorial FROM editorial;";
-            $rs = $this->db->Execute($query);
-            return $rs;
+        public function getNomEditorial() {
+            $query = "SELECT editorial, id_editorial FROM editorial";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+        
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+        
     }
 ?>

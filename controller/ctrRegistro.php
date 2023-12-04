@@ -14,7 +14,7 @@ $recaptchaData = json_decode($recaptchaResponse);
 if ($recaptchaData->success) {
     //echo '2';
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST["email"];
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $msj_registro = new models_registro();
         $resultado = $msj_registro->verificar($email);
         //echo $resultado;
@@ -56,8 +56,7 @@ if ($recaptchaData->success) {
             // Envía la respuesta como JSON
             header('Content-Type: application/json');
             echo json_encode($response);
-            echo json_encode($l1);
-            echo json_encode($l2);
+            exit;
             // header("Location: Admin/ctrlAdmin.php");
         }else{
             $response = array(

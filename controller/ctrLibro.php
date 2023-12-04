@@ -1,36 +1,57 @@
 <?php
 require_once '../models/libros.php';
 require_once '../models/conexion.php';
-include_once '../assets/adodb5/adodb.inc.php';
 
  // Supongamos que el ID del usuario es 1
 
  
 if( isset($_GET['opc']) ){
     $msjModel = new MensajesLibro();
-    $id_info_autor = $_POST['selectAutor'];
-    $nombre = $_POST['txtNombre'];
-    $fecha_publicacion = $_POST['dateFecha'];
-    $num_paginas = $_POST['numPaginas'];
-    $num_capitulos = $_POST['numCapitulos'];
-    $resena = $_POST['txtResena'];
-    $portada = $_POST['imgPortada'];
-    $id_editorial = $_POST['selectEditorial'];
-    $id_categoria = $_POST['selectCategoria'];
     switch($_GET['opc']){
         case 1: // INSERT TO DB
             if(!empty($_POST['hddId']) ){
                 $id_libro = $_POST['hddId'];
+                $id_info_autor = $_POST['id_info_autor'];
+                $nombre = $_POST['nombre'];
+                $fecha_publicacion = $_POST['fecha_publicacion'];
+                $num_paginas = $_POST['num_paginas'];
+                $num_capitulos = $_POST['num_capitulos'];
+                $resena = $_POST['resena'];
+                $portada = $_POST['portada'];
+                $id_editorial = $_POST['id_editorial'];
+                $id_categoria = $_POST['id_categoria'];
                 $msjModel->updateLibro($id_libro, $id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria);
+                header("Location: " . $_SERVER["HTTP_REFERER"]);
             }else
+                $id_info_autor = $_POST['id_info_autor'];
+                $nombre = $_POST['nombre'];
+                $fecha_publicacion = $_POST['fecha_publicacion'];
+                $num_paginas = $_POST['num_paginas'];
+                $num_capitulos = $_POST['num_capitulos'];
+                $resena = $_POST['resena'];
+                $portada = $_POST['portada'];
+                $id_editorial = $_POST['id_editorial'];
+                $id_categoria = $_POST['id_categoria'];
                 $msjModel->InsertLibro($id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria);
+                header("Location: " . $_SERVER["HTTP_REFERER"]);
             break;
         case 2: // UPDATE TO BD
+            $id_info_autor = $_POST['id_info_autor'];
+            $nombre = $_POST['nombre'];
+            $fecha_publicacion = $_POST['fecha_publicacion'];
+            $num_paginas = $_POST['num_paginas'];
+            $num_capitulos = $_POST['num_capitulos'];
+            $resena = $_POST['resena'];
+            $portada = $_POST['portada'];
+            $id_editorial = $_POST['id_editorial'];
+            $id_categoria = $_POST['id_categoria'];
             $msjModel->updateLibro($id_libro, $id_info_autor, $nombre, $fecha_publicacion, $num_capitulos, $num_paginas, $resena, $portada, $id_editorial, $id_categoria);
+            header("Location: " . $_SERVER["HTTP_REFERER"]);
             break;
         case 3: // DELETE TO DB
             $id_libro = $_POST['idMsj'];
             $msjModel->DeleteLibro($id_libro);
+            header("Location: " . $_SERVER["HTTP_REFERER"]);
             //echo 'Mensaje AJAX';
             break;
         case 4: // SELECT TO DB
@@ -40,10 +61,10 @@ if( isset($_GET['opc']) ){
     function getLibro($msjModel){
         $response = '';
         $mensajes5 = $msjModel->getAllLibro();
-        while(!$mensajes5->EOF){
-            if (isset($mensajes5->fields[0])) {
+        foreach($mensajes5 as $l){
+            if (isset($l['portada'])) {
                 $img = '';
-                $url_imagen = htmlspecialchars($mensajes5->fields[1], ENT_QUOTES, 'UTF-8');
+                $url_imagen = htmlspecialchars($l['portada'], ENT_QUOTES, 'UTF-8');
                 $img .= '<div class="centrar-imagen">';
                 $img .= '<img src="' . $url_imagen . '" alt="' . $url_imagen . ' width="300" height="450"">';
                 $img .= '</div>';
@@ -54,22 +75,21 @@ if( isset($_GET['opc']) ){
             <tr>
                 <th scope="row">1</th>
                 <td>'.$img.'</td>
-                <td><h1>'.$mensajes5->fields[2].'</h1></td>
-                <td><h1>'.$mensajes5->fields[3].'</h1></td>
-                <td><h1>'.$mensajes5->fields[4].'</h1></td>
+                <td><h1>'.$l['lnombre'].'</h1></td>
+                <td><h1>'.$l['unombre'].'</h1></td>
+                <td><h1>'.$l['fecha'].'</h1></td>
                 <td>
-                    <input type="button" value="Editar" onclick= "editar('.$mensajes5->fields[0].',\''.$mensajes5->fields[2].'\','.$mensajes5->fields[4].','.$mensajes5->fields[5].','.$mensajes5->fields[6].',\''.$mensajes5->fields[7].'\')" href="#" class="btn btn-success">
+                    <input type="button" value="Editar" onclick= "editar('.$l['id_libro'].',\''.$l['lnombre'].'\','.$l['fecha'].','.$l['numcap'].','.$l['numpag'].',\''.$l['resena'].'\')" href="#" class="btn btn-success">
                 </td>
                 <td>
-                    <input type="button" class="btn btn-danger" value="Eliminar" onclick="eliminar('.$mensajes5->fields[0].')">
+                    <input type="button" class="btn btn-danger" value="Eliminar" onclick="eliminar('.$l['id_libro'].')">
                 </td>
                 <td>
-                    <a href ="./infoLib.php?opc='.$mensajes5->fields[0].'">
+                    <a href ="./infoLib.php?opc='.$l['id_libro'].'">
                         <button  type="submit" class="btn"><i class="fa fa-share-square-o" aria-hidden="true">Visitar</i></button>
                     </a>
                 </td>
             </tr>';
-            $mensajes5->moveNext();
         }
         return $response;
     }

@@ -76,16 +76,22 @@
     </body>
 </html>
 <script>
+
     $(document).ready(function(){
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      console.log(id);
       h();
-      carrito();
+      carrito(id);
       venta();
     })
-    function carrito(){
+    function carrito(id){
     $.ajax({
       type: "POST",
-      url: "../controller/ctrventa.php?Compra=0",
-      data: {},
+      url: "../controller/ctrventa.php",
+      data: {
+        id: id
+      },
       success: function(data) {
         $('#ver').html(data);
         console.log(response);
@@ -104,8 +110,8 @@
     function h(){
     $.ajax({
       type: "POST",
-      url: "../controller/ctrHeader.php?pag=3",
-      data: { pag: '3' },
+      url: "../controller/ctrHeader.php?pag=4",
+      data: { pag: '4' },
       success: function(data) {
         $('#head').html(data);
       },

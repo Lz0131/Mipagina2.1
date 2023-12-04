@@ -19,6 +19,7 @@ $r = '
                       <th scope="col"></th>
                       <th scope="col"></th>
                       <th scope="col">Subtotal</th>
+                      <th scope="col"></th>
                   </tr>
               </thead>
               <tbody>
@@ -54,13 +55,28 @@ foreach ($carrito as $c){
                     </form>
                 </td>
                 <td><h1>'.$c['subtotal'].'</h1></td>
+                <td>
+                    <form action=../controller/carrito.php?id_libro='.$c['id_libro'].' method="post">
+                        <input type="hidden" id="Borrar" name="Borrar" value = "3">
+                        <button  type="submit" class="btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </form>
+                </td>
             </tr>';
 }  
 $subtotal = $msjCarrito->getSubTotal($id_usuario);
+$costo_envio = 99.90;
+if($subtotal == 0){
+    $costo_envio = 0;
+}
 
+$total = $subtotal+$costo_envio;
 $r.='
 </tbody>
+</table>
 <h1>Subtotal :'.$subtotal.'</h1>
+<h1>Total :'.$total.'</h1>
+<input type="hidden" id="total" name="total" value='.$total.'>
+<div id="paypal-button-container"></div>
 ';      
 echo $r; 
 ?>

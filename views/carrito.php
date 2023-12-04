@@ -10,7 +10,9 @@
     <script src="../assets/js/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="../assets/css/carrito.css"> <!--Direccion al css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-    
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AVjULdeLKQFjuZoDsgYmHJO0fUbeAfBbtcdzK2C5V3OQIohAgpGf0Me0RLHvvugvHyHNXubF4d0GlsKD&currency=MXN">
+    </script>
   <!--Fontawesome CDN-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -25,10 +27,6 @@
       <h1>Carrito</h1>
       <div id = "divCarrito"></div>
       <div class="container-carrito">
-        <form id="frmCompra" method="post" action = "./venta.php?">
-          <input type="hidden" id="Compra" name="Compra" value = "0">
-          <button  type="submit" class="btn "><i class="fa fa-shopping-basket" aria-hidden="true">Comprar</i></button>
-        </form>
 </div>
     </div>
   </main>
@@ -87,9 +85,12 @@
 </body>
 </html>
 <script>
+  var total;
+  var id;
 $(document).ready(function(){
     h();
     carrito();
+    
   })
   function carrito(){
     $.ajax({
@@ -98,6 +99,7 @@ $(document).ready(function(){
       data: {},
       success: function(data) {
         $('#divCarrito').html(data);
+        valida();
       },
       error: function(error) {
         console.error('Error al cargar el encabezado', error);
@@ -116,5 +118,64 @@ $(document).ready(function(){
         console.error('Error al cargar el encabezado', error);
       }
     })
+  }  
+  function valida(){
+    var Campototal =document.getElementById("total");
+    //alert(Campototal);
+    total = Campototal.value;
+    //alert(total);
+    if(total !== 0 ){
+      //alert(total);
+      //alert("diferente de 0");
+      cargaPaypal();
+    }else{
+      alert("No hay libros en el carrito");
+    }
+
   }
+
+  function cargaPaypal(){
+    paypal.Buttons({
+        style: {
+            color: 'blue',
+            shape: 'pill',
+            label: 'pay'
+        },
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: total.toString() // Make sure to use a string for the value
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            actions.order.capture().then(function(details) {
+                // Extract values from the details object
+                var purchaseUnit = details.purchase_units[0];
+                var amount = purchaseUnit.amount.value;
+                var currencyCode = purchaseUnit.amount.currency_code;
+                var estado = details.status;
+                id = details.id;
+                // Log or use the extracted values
+                console.log(details);
+                console.log("Amount:", amount);
+                console.log("Currency Code:", currencyCode);
+                console.log("estado:", estado);
+                console.log("id", id);
+                venta(id);
+
+            });
+        },
+        // Payment canceled
+        onCancel: function(data) {
+            alert('Payment canceled');
+            console.log(data);
+        }
+    }).render('#paypal-button-container');
+  }  
+function venta(id) {
+  window.location.href = "./venta.php?id=" + id;
+}   
 </script>

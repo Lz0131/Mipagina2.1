@@ -113,11 +113,12 @@
             //echo 'correcto';
             //return $stmt;
         }
-        public function DeleteProducCarrito($id_usuario){
+        public function DeleteProducCarrito($id_usuario, $id_libro){
             $table = 'carrito';
-            $query = 'DELETE FROM carrito WHERE id_usuario =:id_usuario';
+            $query = 'DELETE FROM carrito WHERE id_usuario = :id_usuario AND id_libro = :id_libro';
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_STR);
+            $stmt->bindParam(':id_libro', $id_libro, PDO::PARAM_STR);
             $stmt->execute();
         }
 

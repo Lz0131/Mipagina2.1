@@ -8,7 +8,7 @@ require_once '../models/miscompras.php';
 $msjCarrito =  new MensajesModelCarrito();
 $id_usuario = $_SESSION['id_usuario'];
 
-if (isset($_GET['Compra'])) {
+if (isset($_POST['id'])) {
     $numCarrito = $msjCarrito->getAllCarritonum($id_usuario);
     //echo 'num carrito'. $numCarrito;
     if($numCarrito == 0){
@@ -16,14 +16,14 @@ if (isset($_GET['Compra'])) {
             'success' => false,
             'message' => 'No hay libros en el carrito. Agrega libros antes de comprar.'
         );
-        echo json_encode($response);
+         json_encode($response);
         exit;
     }else{
         $fecha = date('Y-m-d H:i:s');
         //echo 'fecha'.$fecha;
         $mensaje = "asdsa";
         //echo "<script>console.log('$mensaje');</script>";
-        $id_metodo_pago = 1;
+        $id_metodo_pago = $_POST['id'];
         $id_venta = $msjCarrito -> Crearventa($id_usuario, $id_metodo_pago, $fecha);
         //echo 'id_venta '.$id_venta;
         $carrito = $msjCarrito -> getCarrito($id_usuario);
@@ -50,14 +50,14 @@ if (isset($_GET['Compra'])) {
             'success' => true,
             'message' => 'Compra exitosa. Gracias por tu compra.'
         ); 
-        echo json_encode($response);
+        json_encode($response);
         exit;
     }
     $response = array(
         'success' => false,
         'message' => 'No llega'
     ); 
-    echo json_encode($response);
+     json_encode($response);
     exit;
 }
 
@@ -114,7 +114,7 @@ function ticket($id_venta, $id_usuario){
                 <p>Correro de contacto: <span>'.$info_usuario['email'].'</span></p>
                 <p>Direccion: <span>'.$info_direccion['calle'].', '.$info_direccion['num_casa'].', '.$info_direccion['ciudad'].', '.$info_direccion['estado'].', '.$info_direccion['pais'].'</span></p>
                 <h3>Informacion de Pago</h3>
-                <p>'.$info_pago.'</p>
+                <p>Paypal</p>
                 <h2>Informacion General</h2>
                 <p>Fecha de compra: <span>'.$info_fecha.' </span></p>
             </div>

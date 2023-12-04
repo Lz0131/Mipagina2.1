@@ -24,7 +24,7 @@ if(isset($_GET['id_venta'])){
     $venta = $miCompra-> getVenta($id_venta);
     $info_usuario = $miCompra-> getInfoUsuario($id_usuario);
     $info_direccion = $miCompra-> getDireccion ($id_usuario);
-    $info_pago = $miCompra-> getInfoPago($id_venta);
+    //$info_pago = $miCompra-> getInfoPago($id_venta);
     $info_fecha = $miCompra-> getFecha($id_venta);
     $html = '
     <!DOCTYPE html>
@@ -84,6 +84,7 @@ if(isset($_GET['id_venta'])){
             $portada.='<div class="centrar-imagen">';
             $portada.= '<img src="' . $url_imagen . '" alt="' . $url_imagen . '" width="50" height="100">';
             $portada.= '</div>';
+            
         } else {
             $portada.='La URL de la imagen no está disponible.';
         }
@@ -102,7 +103,7 @@ if(isset($_GET['id_venta'])){
                 <p>Correro de contacto: <span>'.$info_usuario['email'].'</span></p>
                 <p>Direccion: <span>'.$info_direccion['calle'].', '.$info_direccion['num_casa'].', '.$info_direccion['ciudad'].', '.$info_direccion['estado'].', '.$info_direccion['pais'].'</span></p>
                 <h3>Informacion de Pago</h3>
-                <p>'.$info_pago.'</p>
+                <p>Paypal</p>
                 <h2>Informacion General</h2>
                 <p>Fecha de compra: <span>'.$info_fecha.' </span></p>
             </div>

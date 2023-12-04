@@ -18,7 +18,7 @@
         public function verificarEmail($email){
             //$email = 'gamez.dulce.1dm@gmail.com';
             $query = "SELECT count(email)  from usuario WHERE email= :email";
-            echo $query;
+            //echo $query;
             $stmt = $this->db->prepare($query);
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();

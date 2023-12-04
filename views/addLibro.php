@@ -1,20 +1,3 @@
-<?php
-    require_once '../models/libros.php';
-    require_once '../models/carrito.php';
-    require_once '../models/editorial.php';
-    require_once '../models/categoria.php';
-    require_once '../models/conexion.php';
-    include_once '../assets/adodb5/adodb.inc.php';
-    $id_usuario = 1;
-    $msjModel = new MensajesLibro();
-    $numModel = new MensajesModelCarrito();
-    $nomEditorial = new MensajesEditorial();
-    $nomCategoria = new MensajesCategoria();
-    $mensajes4 = $nomCategoria->getNomCategoria();
-    $mensajes3 = $nomEditorial->getNomEditorial();
-    $mensajes2 = $numModel->getAllCarritonum($id_usuario);
-    $mensajes = $msjModel-> getNomInfo_Autor();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,92 +55,7 @@
     <header id = "head">
     </header> 
     <!--Cuadro de informacion del libro-->
-    <main>
-        <div class="addlibro container">
-        <h3>Libros</h3><div id="resAJAX"></div>
-            <form id="frmaddlibro" >
-                <input type="hidden" id="hddId" name="hddId">
-                <div class="form-group">
-                    <label for="selectAutor">Autor</label>
-                    <select name="selectAutor" id="selectAutor" class="form-control">
-                    <?php
-                        while(!$mensajes->EOF){
-                    ?>
-                    <option value="<?php echo $mensajes->fields[1] ?>"><?php echo $mensajes->fields[0] ?></option>
-                    <?php 
-                            $mensajes->moveNext();
-                        }
-                    ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="txtNombre">Nombre</label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="dateFecha">fecha</label>
-                    <input type="date" id="dateFecha" name="dateFecha" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="numCapitulos">Numero de capitulos</label>
-                    <input type="number" id="numCapitulos" name="numCapitulos" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="numPaginas">Numero de paginas</label>
-                    <input type="number" id="numPaginas" name="numPaginas" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="txtResena">Reseña</label>
-                    <textarea name="txtResena" id="txtResena" cols="30" rows="10" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="imgPortada">Portada</label>
-                    <input type="url" id="imgPortada" name="imgPortada" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="selectEditorial">Editorial</label>
-                    <select name="selectEditorial" id="selectEditorial" class="form-control">
-                    <?php
-                        while(!$mensajes3->EOF){
-                    ?>
-                    <option value="<?php echo $mensajes3->fields[1] ?>"><?php echo $mensajes3->fields[0] ?></option>
-                    <?php 
-                            $mensajes3->moveNext();
-                        }
-                    ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="selectCategoria">Categoria</label>
-                    <select name="selectCategoria" id="selectCategoria" class="form-control">
-                    <?php
-                        while(!$mensajes4->EOF){
-                    ?>
-                    <option value="<?php echo $mensajes4->fields[1] ?>"><?php echo $mensajes4->fields[0] ?></option>
-                    <?php 
-                            $mensajes4->moveNext();
-                        }
-                    ?>
-                    </select>
-                </div>
-                <button type="button" onclick="insertar()" class="btn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-            </form>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Portada</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Autor</th>
-                        <th scope="col">Fecha de publicacion</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody id="tbLibros"></tbody>
-            </table>
-        </div>
+    <main id = "LoDelLibro">
     </main>
     <!--Pie de Pagina Footer--> 
     <footer class="section footer-classic context-dark bg-image" style="background:black;">
@@ -215,16 +113,13 @@
 </html>
 <script>
   $( document ).ready(function() {
-    $.ajax({
-        type: "POST", 
-        data:{},       
-        url: "../controller/ctrLibro.php?opc=4",
-        success: function (data) {
-          $('#tbLibros').html(data);
-        }
-      })
+    h();
+    AddLibro();
+    VerLibros();
+    
   });
-  $(document).ready(function(){
+
+  function h(){
     $.ajax({
       type: "POST",
       url: "../controller/ctrHeader.php?pag=7",
@@ -236,5 +131,25 @@
         console.error('Error al cargar el encabezado', error);
       }
     })
-  });
+  }
+  function VerLibros() {
+    $.ajax({
+        type: "POST", 
+        data:{},       
+        url: "../controller/ctrLibro.php?opc=4",
+        success: function (data) {
+          $('#tbLibros').html(data);
+        }
+      })
+  }
+  function AddLibro() {
+    $.ajax({
+        type: "POST", 
+        data:{},       
+        url: "../controller/addLibro.php",
+        success: function (data) {
+          $('#LoDelLibro').html(data);
+        }
+      })
+  }
 </script>

@@ -8,17 +8,33 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js">
         <script src="../assets/js/jquery-3.7.1.min.js"></script>
-        <link rel="stylesheet" href="../assets/css/venta.css"> <!--Direccion al css-->
+        <link rel="stylesheet" href="../assets/css/carrito.css"> <!--Direccion al css-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body>
         <!--Header-->
         <header id="head"></header>
+        <main>
+          <div id="calendario_rango">
+          <label for="fecha_inicial">Fecha Inicial:</label>
+          <input type="text" id="fecha_inicial" name="fecha_inicial">
+          <label for="fecha_final">Fecha Final:</label>
+          <input type="text" id="fecha_final" name="fecha_final">
+          </div>
+          <div>
+            <button class="btn" type="button" onclick="obtenerFechas()">Dibujar gráfica</button>
+          </div>
+          <div id = "Grafica"></div>
+        </main>
+        
         <!--Contenido-->
-        <div id = "Grafica"></div>
+        
         <!--Pie de Pagina-->
         <footer class="section footer-classic context-dark bg-image" style="background:black;">
         <div class="containe">
@@ -66,36 +82,117 @@
           <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-twitter"></span><span>twitter</span></a></div>
           <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>google</span></a></div>
         </div>
-      </footer>
+    </footer>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    </body>
-</html>
-<script>
-    $(document).ready(function(){
-      h();
-    })
-    function optenerDatos(){
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+    $(function() {
+    $("#fecha_inicial, #fecha_final").datepicker({
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true,
+        onSelect: function(selectedDate) {
+            var option = this.id === "fecha_inicial" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(
+                    instance.settings.dateFormat || $.datepicker._defaults.dateFormat,
+                    selectedDate,
+                    instance.settings
+                );
+            $("#fecha_inicial, #fecha_final")
+                .not(this)
+                .datepicker("option", option, date);
+        }
+    });
+});
+
+function obtenerFechas() {
+    var fechaInicial = $("#fecha_inicial").datepicker("getDate");
+    var fechaFinal = $("#fecha_final").datepicker("getDate");
+
+    // Convertir las fechas al formato yyyy-mm-dd
+    var fechaInicialFormato = $.datepicker.formatDate("yy-mm-dd", fechaInicial);
+    var fechaFinalFormato = $.datepicker.formatDate("yy-mm-dd", fechaFinal);
+
+    if (fechaInicial && fechaFinal) {
+        console.log("Fecha Inicial:", fechaInicialFormato);
+        console.log("Fecha Final:", fechaFinalFormato);
+
         $.ajax({
             url: '../controller/ctrGrafica.php',
             type: 'POST',
-            data: {},
+            data: { fechaInicial: fechaInicialFormato, fechaFinal: fechaFinalFormato },
             dataType: 'json',
-            success: function(data){
+            success: function (data) {
                 dibujargraficas(data);
             },
-            error: function (error){
-                console.error('Error al procesar la peticion AJAX', error);
+            error: function (error) {
+                console.error('Error al procesar la petición AJAX', error);
             }
         });
+    } else {
+        console.log("Selecciona un rango de fechas válido.");
     }
+}
 
-    function dibujargraficas(){
-        
-    }
 
+  </script>
+    </body>
+</html>
+<script> 
+    $(document).ready(function(){
+      verificar();
+      h();
+    })
+
+    function dibujargraficas(data) {
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(function () {
+        var chartData = new google.visualization.DataTable();
+        chartData.addColumn('string', 'libro');
+        chartData.addColumn('number', 'total_ventas');
+
+        for (var i = 0; i < data.length; i++) {
+            chartData.addRow([data[i].nombre, parseInt(data[i].total_ventas)]);
+        }
+
+        var options = {
+            chart: {
+                title: 'Libros vendidos en el periodo de tiempo',
+                subtitle: 'Libro',
+            }
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('Grafica'));
+        chart.draw(chartData, options);
+    });
+}
+
+  function verificar(){
+    jQuery.ajax({
+        url: '../controller/ctrRol.php?opc=1',
+        type: 'POST',
+        dataType: 'json',
+        data: jQuery(this).serialize(),
+        beforeSend: function () {
+            // Puedes realizar acciones antes de enviar la solicitud aquí
+            //jQuery('.botonlg').val('validando...'); // Debes usar jQuery en lugar de $
+        }
+    })
+    .done(function (respuesta) {
+        if (respuesta.success) {
+            //alert(respuesta.message)
+        }else{
+            alert(respuesta.message)
+            window.location.href = "../index.php";
+        }
+    })
+  }
 
     function h(){
     $.ajax({

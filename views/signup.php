@@ -46,6 +46,7 @@
             data: formData,
             success: function(data){
               $('#resAJAX').html(data);
+              window.location.href = '../index.php';
             }
         });
     }

@@ -5,7 +5,7 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     border-radius: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 table {
     width: 100%;
@@ -14,7 +14,7 @@ table {
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #000000;
 }
 
 th, td {
@@ -135,7 +135,7 @@ th, td {
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,body{
-background-image: url('../img/gif0.gif');
+background-image: url('../img/gif10.gif');
 background-size: cover;
 
 height: 100%;

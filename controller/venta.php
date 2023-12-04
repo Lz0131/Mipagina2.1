@@ -5,10 +5,10 @@ require_once '../models/conexion.php';
 
 $msjVenta = new MensajesModelVentas();
 $id_usuario = $_SESSION['id_usuario'];
-echo $id_usuario;
+//echo $id_usuario;
 $r = '<h2>Resumen de Compra</h2>';
 $id_venta = $msjVenta->traerId_Venta($id_usuario);
-echo $id_venta;
+//echo $id_venta;
 $cantidad_producto = $msjVenta->getCantidadProducto ($id_venta);
 $r.= '
 <p>Cantidad de productos: <span>'.$cantidad_producto.'</span></p>';
@@ -68,7 +68,7 @@ $r.= '
 <p>Direccion: <span>'.$info_direccion['calle'].', '.$info_direccion['num_casa'].', '.$info_direccion['ciudad'].', '.$info_direccion['estado'].', '.$info_direccion['pais'].'</span></p>
 
 <h3>Informacion de Pago</h3>
-<p>'.$info_pago.'</p>
+<p>Paypal</p>
 
 <h2>Informacion General</h2>
 <p>Fecha de compra: <span>'.$info_fecha.' </span></p>

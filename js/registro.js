@@ -26,9 +26,9 @@ jQuery(document).on('submit', '#frmRegistro', function (event) {
     var longitud = document.getElementById("longitud").value;
     var selectElement = document.getElementById("id_ciudad");
     var selectedValue = selectElement.value;
-    alert(selectedValue);
-    alert(latitud);
-    alert(longitud);
+    //alert(selectedValue);
+    //alert(latitud);
+    //alert(longitud);
     // Verificar que todos los campos estén llenos
     if (nombre === "" || ape_paterno === "" || ape_materno === "" || correo === "" || password === "" || calle === "" || numero_casa === "" || caracteristicas === "" || latitud === "" || longitud === "") {
         alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
@@ -46,36 +46,16 @@ jQuery(document).on('submit', '#frmRegistro', function (event) {
     })
         .done(function (respuesta) {
             if (respuesta.success) {
-                alert("exito");
-                alert(respuesta);
-                // Actualiza el contenido del div con el mensaje de respuesta
-                jQuery('#error').html(respuesta.message);
-                jQuery('#error').slideDown('slow');
-                setTimeout(function () {
-                    jQuery('#error').slideUp('slow');
-                }, 3000);
-                $('#successModal').find('.modal-body').html(respuesta.message);
-                $('#successModal').modal('show');
-                setTimeout(function () {
-                    // Realiza otra acción aquí, por ejemplo, redirige a otra página
-                    window.location.href = '../index.php';
-                }, 3000);
+                alert("Registro exitoso");
+                window.location.href = '../index.php'
 
             } else {
                 alert('correo duplicado');
-                jQuery('#error').html(respuesta.message);
-                //alert(respuesta.message);
-                jQuery('#error').slideDown('slow');
-                setTimeout(function () {
-                    jQuery('#error').slideUp('slow');
-                }, 1000);
-                console.log('Error: ' + respuesta.message);
-                grecaptcha.reset();
-                // Puedes mostrar un mensaje de error
             }
         })
 
         .fail(function (resp) {
+            alert(resp.responseText);
             console.log(resp.responseText);
         })
         .always(function () {

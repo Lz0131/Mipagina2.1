@@ -11,10 +11,13 @@
             $this->db = $con->conectar();
         }
 
-        public function getNomCategoria(){
-            $query = "SELECT categoria.categoria, categoria.id_categoria FROM categoria;";
-            $rs = $this->db->Execute($query);
-            return $rs;
+        public function getNomCategoria() {
+            $query = "SELECT categoria, id_categoria FROM categoria";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+        
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+        
     }
 ?>

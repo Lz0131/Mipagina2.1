@@ -32,6 +32,7 @@
             data: jQuery('#frmInicioSesion').serialize(),
             success: function(data){
               //window.location.href = "../index.php";
+           
             }
           })
         }
@@ -146,7 +147,7 @@
 </html>
 <script>
 $(document).ready(function(){
-    $.ajax({
+    $.ajax({// me trae el header de la pagina
       type: "POST",
       url: "../controller/ctrHeader.php?pag=6",
       data: { pag: '6' },

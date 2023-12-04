@@ -4,18 +4,21 @@
     require_once '../models/conexion.php';
     require_once '../models/usuario.php';
     require_once '../models/favorito.php';
+    require_once '../models/carrito.php';
     //echo '0';
     $msjRol = new models_usuario();
     $msjFav = new MensajesModel();
+    $msjCar = new MensajesModelCarrito();
 
     //echo '1';
     if(isset($_SESSION['id_usuario'])){
         //echo '2';
         $id_usuario = $_SESSION['id_usuario'];
-        echo $id_usuario;
+        //echo $id_usuario;
         $numFav = $msjFav->getAllTotalFavoritosnum($id_usuario);
-        echo $numFav;
-        echo $_GET['pag'];
+        $numCar = $msjCar->getAllCarritonum($id_usuario);
+        //echo $numFav;
+        //echo $_GET['pag'];
         //echo 'num fav '.$numFav;
         //echo 'id usuario'.$id_usuario;
         //echo 'rol '. $msjRol->getRol($id_usuario);
@@ -36,7 +39,7 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     case 1: //Pagina Index.php
                         $logo = './assets/img/logo1.png';
@@ -47,7 +50,7 @@
                         $dirMisLibros = './views/libros.php';
                         $dirPerfil = './views/perfil.php';
                         $dirCerrarsession = './controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     case 2: //Pagina Favoritos
                         $logo = '../assets/img/logo1.png';
@@ -58,7 +61,7 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     case 3: //Pagina Carrito
                         $logo = '../assets/img/logo1.png';
@@ -69,7 +72,7 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     case 4: //Pagina MisCompras
                         $logo = '../assets/img/logo1.png';
@@ -80,7 +83,7 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     case 5: //Pagina MisLibros
                         $logo = '../assets/img/logo1.png';
@@ -91,7 +94,7 @@
                         $dirMisLibros = '#';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     case 6: // Perfil
                         $logo = '../assets/img/logo1.png';
@@ -102,7 +105,7 @@
                         $dirMisLibros = './views/libros.php';
                         $dirPerfil = './views/perfil.php';
                         $dirCerrarsession = './controller/logout.php';
-                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav);
+                        hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar);
                         break;
                     default:
                         echo 'entra a default';    
@@ -112,7 +115,7 @@
         //Rol Escritor
         }else if($msjRol->getRol($id_usuario) == 2){
             if(isset($_GET['pag'])){
-                echo '5';
+                //echo '5';
                 switch($_GET['pag']){
                     case 0: //Pagina InfoLibros
                         $logo = '../assets/img/logo1.png';
@@ -123,8 +126,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirAddLibro = './views/addLibro.php';
-                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        $dirAddLibro = './addLibro.php';
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     case 1: //Pagina Index.php
                         $logo = './assets/img/logo1.png';
@@ -136,7 +139,7 @@
                         $dirPerfil = './views/perfil.php';
                         $dirCerrarsession = './controller/logout.php';
                         $dirAddLibro = './views/addLibro.php';
-                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro , $numFav);
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro , $numFav, $numCar);
                         break;
                     case 2: //Pagina Favoritos
                         $logo = '../assets/img/logo1.png';
@@ -147,8 +150,9 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirAddLibro = './views/addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        $dirAddLibro = './addLibro.php';
+                        
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     case 3: //Pagina Carrito
                         $logo = '../assets/img/logo1.png';
@@ -159,8 +163,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirAddLibro = './views/addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        $dirAddLibro = './addLibro.php';
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     case 4: //Pagina MisCompras
                         $logo = '../assets/img/logo1.png';
@@ -171,8 +175,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirAddLibro = './views/addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        $dirAddLibro = './addLibro.php';
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     case 5: // Biblioteca de los libros comprados
                         $logo = '../assets/img/logo1.png';
@@ -184,7 +188,7 @@
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
                         $dirAddLibro = './addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     case 6: // Perfil
                         $logo = '../assets/img/logo1.png';
@@ -196,11 +200,11 @@
                         $dirPerfil = '#';
                         $dirCerrarsession = './controller/logout.php';
                         $dirAddLibro = './addLibro.php';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                        echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     case 7: // Añadir un libro
                         $logo = '../assets/img/logo1.png';
-                        $dirIndex = './index.php';
+                        $dirIndex = '../index.php';
                         $dirFavorito = './favorito.php';
                         $dirCarrito = './carrito.php';
                         $dirMiscompras = './miscompras.php';
@@ -208,7 +212,7 @@
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = './controller/logout.php';
                         $dirAddLibro = '#';
-                        hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav);
+                       echo hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar);
                         break;
                     default:
                         echo 'entra a default';    
@@ -229,8 +233,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     case 1: //Pagina Index.php
                         $logo = './assets/img/logo1.png';
@@ -241,8 +245,8 @@
                         $dirMisLibros = './views/libros.php';
                         $dirPerfil = './views/perfil.php';
                         $dirCerrarsession = './controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     case 2: //Pagina Favoritos
                         $logo = '../assets/img/logo1.png';
@@ -253,8 +257,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     case 3: //Pagina Carrito
                         $logo = '../assets/img/logo1.png';
@@ -265,8 +269,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     case 4: //Pagina MisCompras
                         $logo = '../assets/img/logo1.png';
@@ -277,8 +281,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     case 5: //Pagina MisLibros
                         $logo = '../assets/img/logo1.png';
@@ -289,8 +293,8 @@
                         $dirMisLibros = '#';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = '../controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     case 6: // Perfil
                         $logo = '../assets/img/logo1.png';
@@ -301,10 +305,10 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = '#';
                         $dirCerrarsession = './controller/logout.php';
-                        $dirComentarios = './comentarios.php';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = './estadisticas.php';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
-                    case 7: // Ver los comentarios dejados
+                    case 7: // Graficas
                         $logo = '../assets/img/logo1.png';
                         $dirIndex = './index.php';
                         $dirFavorito = './favorito.php';
@@ -313,8 +317,8 @@
                         $dirMisLibros = './libros.php';
                         $dirPerfil = './perfil.php';
                         $dirCerrarsession = './controller/logout.php';
-                        $dirComentarios = '#';
-                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav);
+                        $dirGraficas = '#';
+                        hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar);
                         break;
                     default:
                         echo 'entra a default';    
@@ -335,7 +339,7 @@
             }
         }
     }
-    function hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav){
+    function hea1($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $numFav, $numCar){
         $h1 = '
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="'.$dirIndex.'"><img height="100" src="" alt=""> <img src="'.$logo.'" alt="" width="80" height="60"> </a>
@@ -370,7 +374,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="'.$dirCarrito.'">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                            <span class="badge badge-danger">11</span>
+                            <span class="badge badge-danger">'.$numCar.'</span>
                         </i>
                         Carrito
                         </a>
@@ -415,7 +419,7 @@
         return $h1;
     }
 
-    function hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav){
+    function hea2($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirAddLibro, $numFav, $numCar){
         $h2 = '
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="'.$dirIndex.'"><img height="100" src="" alt=""> <img src="'.$logo.'" alt="" width="80" height="60"> </a>
@@ -442,7 +446,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="'.$dirFavorito.'">
                             <i class="fa fa-heart">
-                            <span class="badge badge-danger">11</span>
+                            <span class="badge badge-danger">'.$numFav.'</span>
                             </i>
                             Favoritos
                         </a>
@@ -450,7 +454,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="'.$dirCarrito.'">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                            <span class="badge badge-danger">11</span>
+                            <span class="badge badge-danger">'.$numCar.'</span>
                         </i>
                         Carrito
                         </a>
@@ -499,7 +503,7 @@
                 </form>
             </div>
         </nav>';
-        echo $h2;
+        //echo $h2;
         return $h2;
     }
     function heaDefault1(){
@@ -582,7 +586,7 @@
         return $hDefault2;
     }
 
-    function hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirComentarios, $numFav){
+    function hea3($logo, $dirIndex, $dirFavorito, $dirCarrito, $dirMiscompras, $dirMisLibros, $dirPerfil, $dirCerrarsession, $dirGraficas, $numFav, $numCar){
         $h1 = '
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="'.$dirIndex.'"><img height="100" src="" alt=""> <img src="'.$logo.'" alt="" width="80" height="60"> </a>
@@ -617,7 +621,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="'.$dirCarrito.'">
                         <i class="fa fa-shopping-cart" aria-hidden="true">
-                            <span class="badge badge-danger">11</span>
+                            <span class="badge badge-danger">'.$numCar.'</span>
                         </i>
                         Carrito
                         </a>
@@ -639,11 +643,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="'.$dirComentarios.'">
+                        <a class="nav-link" href="'.$dirGraficas.'">
                         <i class="fa fa-bookmark" aria-hidden="true">
                             <span class="badge badge-danger">11</span>
                         </i>
-                        Ver comentarios
+                        Graficas
                         </a>
                     </li>
                     <li class="nav-item dropdown">
